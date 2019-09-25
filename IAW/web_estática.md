@@ -34,3 +34,11 @@ Desactivar entorno:
 ~~~
 	deactivate
 ~~~
+
+Pasamos a instalar MkDocs, que una vez dentro de nuestro entorno virtual tendremos que ejecutar el siguiente comando:
+
+~~~
+pip install mkdocs
+~~~
+
+MkDocs utiliza python como lenguaje de desarrollo y jinja2 como sistema de plantillas.
