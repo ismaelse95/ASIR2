@@ -27,10 +27,10 @@ Para activar el entorno o desactivarlo tendremos que poner los siguientes comand
 
 Activar entorno: 
 ~~~
-source nombre_entorno_virtual/bin/activate
+	source nombre_entorno_virtual/bin/activate
 ~~~
 
 Desactivar entorno: 
 ~~~
-deactivate
+	deactivate
 ~~~
