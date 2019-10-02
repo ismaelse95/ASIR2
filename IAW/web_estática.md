@@ -116,6 +116,11 @@ Y una página sobre la información sobre como instalar y configurar un servidor
 
 ![Tercera página](pagina3.png)
 
-Con esto ya nos crea los ficheros html y una vez tengamos estos ficheros lo subiremos a nuestro git.
+Por ultimo subiremos a nuestro git el fichero .gitignore:
+
+~~~
+ismael@Ismael:~/GITHUB/mkdocsdesarrollo$ ls -a
+.  ..  docs  .git  .gitignore  mkdocs.yml  README.md
+~~~
 
 4.- Explica el proceso de despliegue utilizado por el servicio de hosting que vas a utilizar. (2 puntos)
