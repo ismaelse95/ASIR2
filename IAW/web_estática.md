@@ -85,6 +85,14 @@ Para generar nuestro sitio estatico y tener nuestros elementos HTML tendremos qu
 mkdocs build
 ~~~
 
+Con este comando hemos constuido los siguientes elementos HTML.
+
+~~~
+ismael@Ismael:~/GITHUB/mkdocs$ ls
+404.html  css       fonts  index.html   js         search       sitemap.xml
+about     entradas  img    informacion  README.md  search.html  sitemap.xml.gz
+~~~
+
 Ahora pasamos a crear las 3 páginas:
 
 ~~~
