@@ -96,9 +96,15 @@ entradas.md  img  index.md  informacion.md
 
 Para demostrar las páginas creadas, las mostraré con tres imagenes:
 
+Tendremos la página de inicio.
+
 ![Primera página](pagina1.png)
 
+Una página de las entradas que tiene la página web.
+
 ![Segunda página](pagina2.png)
+
+Y una página sobre la información sobre como instalar y configurar un servidor Debian.
 
 ![Tercera página](pagina3.png)
 
