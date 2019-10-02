@@ -94,6 +94,14 @@ docs  mkdocs.yml  site
 entradas.md  img  index.md  informacion.md
 ~~~
 
+Para demostrar las páginas creadas, las mostraré con tres imagenes:
+
+![Primera página](pagina1.png)
+
+![Segunda página](pagina2.png)
+
+![Tercera página](pagina3.png)
+
 Con esto ya nos crea los ficheros html y una vez tengamos estos ficheros lo subiremos a nuestro git.
 
 4.- Explica el proceso de despliegue utilizado por el servicio de hosting que vas a utilizar. (2 puntos)
