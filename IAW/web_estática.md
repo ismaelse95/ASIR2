@@ -158,3 +158,29 @@ Por último cambiaremos el nombre del sitio en gitlab para poder acceder, para e
 Con esto ya tendremos nuestra página subida a gitlab.
 
 ![Quinta página](gitlab5.png)
+
+5.- Piensa algún método (script, scp, rsync, git,…) que te permita automatizar la generación de la página (integración continua) y el despliegue automático de la página en el entorno de producción, después de realizar un cambio de la página en el entorno de desarrollo. Muestra al profesor un ejemplo de como al modificar la página se realiza la puesta en producción de forma automática. (3 puntos)
+
+Por último vamos a crear un script para poder automatizar el paso de la página en desarrollo a produccion, crearemos el siguiente scrip:
+
+~~~
+#!/bin/bash
+
+#Entrar en el entorno virtual
+cd /home/ismael
+source mkdocs-python/bin/activate
+
+#Crear ficheros HTML
+cd /home/ismael/GITHUB/mkdocsdesarrollo/
+git add .
+git commit -am "$1"
+git push
+mkdocs build -d ../mkdocs/
+
+#Subir a entorno de producción los ficheros HTML
+cd /home/ismael/GITHUB/mkdocs
+git add .
+git commit -am "$1"
+git push
+deactivate
+~~~
