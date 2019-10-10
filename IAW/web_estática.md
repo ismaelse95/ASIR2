@@ -106,15 +106,15 @@ Para demostrar las páginas creadas, las mostraré con tres imagenes:
 
 Tendremos la página de inicio.
 
-![Primera página](pagina1.png)
+![Primera página](img/pagina1.png)
 
 Una página de las entradas que tiene la página web.
 
-![Segunda página](pagina2.png)
+![Segunda página](img/pagina2.png)
 
 Y una página sobre la información sobre como instalar y configurar un servidor Debian.
 
-![Tercera página](pagina3.png)
+![Tercera página](img/pagina3.png)
 
 Por ultimo subiremos a nuestro git el fichero .gitignore:
 
@@ -127,7 +127,7 @@ ismael@Ismael:~/GITHUB/mkdocsdesarrollo$ ls -a
 
 Para desplegar nuestra página estatica en nuestro hosting Gitlab pages lo primero que tenemos que hacer es crear un nuevo proyecto dentro de gitlab:
 
-![Primera página](gitlab1.png)
+![Primera página](img/gitlab1.png)
 
 Una vez creado el proyecto entramos y tendremos que crear un fichero llamado *.gitlab-ci.yml*, para ello nos dirigimos a repository > files y crearemos un nuevo fichero que tendremos que introducir los siguientes datos para que la página pueda montarse correctamente:
 
@@ -145,11 +145,11 @@ pages:
   - master
 ~~~
 
-![Tercera página](gitlab3.png)
+![Tercera página](img/gitlab3.png)
 
 Con esto ya tendremos nuestra página subida a gitlab.
 
-![Quinta página](gitlab5.png)
+![Quinta página](img/gitlab5.png)
 
 5.- Piensa algún método (script, scp, rsync, git,…) que te permita automatizar la generación de la página (integración continua) y el despliegue automático de la página en el entorno de producción, después de realizar un cambio de la página en el entorno de desarrollo. Muestra al profesor un ejemplo de como al modificar la página se realiza la puesta en producción de forma automática. (3 puntos)
 
