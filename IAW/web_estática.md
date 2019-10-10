@@ -125,13 +125,9 @@ ismael@Ismael:~/GITHUB/mkdocsdesarrollo$ ls -a
 
 4.- Explica el proceso de despliegue utilizado por el servicio de hosting que vas a utilizar. (2 puntos)
 
-Para desplegar nuestra página estatica en nuestro hosting Gitlab pages lo primero que tenemos que hacer es crear un nuevo proyecto dentro de gitlab, seleccionamos *import project* y github:
+Para desplegar nuestra página estatica en nuestro hosting Gitlab pages lo primero que tenemos que hacer es crear un nuevo proyecto dentro de gitlab:
 
 ![Primera página](gitlab1.png)
-
-Lo siguiente es seleccionar nuestro repositorio html en mi caso recibe el nombre de mkdocs, le damos a importar y ya tendriamos el proyecto creado:
-
-![Segunda página](gitlab2.png)
 
 Una vez creado el proyecto entramos y tendremos que crear un fichero llamado *.gitlab-ci.yml*, para ello nos dirigimos a repository > files y crearemos un nuevo fichero que tendremos que introducir los siguientes datos para que la página pueda montarse correctamente:
 
@@ -150,10 +146,6 @@ pages:
 ~~~
 
 ![Tercera página](gitlab3.png)
-
-Por último cambiaremos el nombre del sitio en gitlab para poder acceder, para ello nos dirigimos a settings > general > expandimos avanced y en changed path cambiaremos el nomnbre:
-
-![Cuarta página](gitlab4.png)
 
 Con esto ya tendremos nuestra página subida a gitlab.
 
@@ -175,10 +167,10 @@ cd /home/ismael/GITHUB/mkdocsdesarrollo/
 git add .
 git commit -am "$1"
 git push
-mkdocs build -d ../mkdocs/
+mkdocs build -d ../mkdocs_page/
 
 #Subir a entorno de producción los ficheros HTML
-cd /home/ismael/GITHUB/mkdocs
+cd /home/ismael/GITHUB/mkdocs_page
 git add .
 git commit -am "$1"
 git push
