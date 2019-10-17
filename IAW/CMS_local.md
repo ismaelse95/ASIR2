@@ -96,3 +96,25 @@ systemctl restart apache2
 Entramos a la página para hacer la instalación en mi caso la url es www.ismael-drupal.org/core/install.php
 
 ![Primera página](img/drupal1.png)
+
+Ahora seleccionamos estandar.
+
+![Segunda página](img/drupal2.png)
+
+Y por último configuramos la base de datos.
+
+![Tercera página](img/drupal3.png)
+
+Una vez configurada la base de datos esperamos a que termine la instalacion de drupal 8.7.8 en mi caso.
+
+Bien ahora vamos a cambiar el tema a nuestra página para ello nos dirigimos a apariencia y a instalar nuevo tema. Yo en mi caso he escogido uno de la página de drupal me lo he descargado y lo he subido.
+
+![Cuarta página](img/drupal4.png)
+
+Para terminar vamos a añadir una extensión yo he escogido la de compartir las redes sociales.
+
+![Quinta página](img/drupal5.png)
+
+![Sexta página](img/drupal6.png)
+
+## TAREA 3
