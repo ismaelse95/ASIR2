@@ -83,6 +83,12 @@ Con esto podemos habilitar el sitio con el comando:
 ln -s /etc/apache2/sites-available/drupal.conf /etc/apache2/sites-enabled/drupal.conf
 ~~~
 
+Activamos el modo rewrite:
+
+~~~
+a2ensite rewrite
+~~~
+
 Y por ultimo reiniciamos apache2:
 
 ~~~
@@ -118,13 +124,13 @@ Para terminar vamos a añadir una extensión yo he escogido la de compartir las 
 Pasamos a crear una copia de seguridad de la base de datos que lo haremos con el siguiente comando:
 
 ~~~
-mysqldump -u usuariodrupal -p dbdrupal --single-transaction --quick --lock-tables=false > copia_seguridad.sql
+mysqldump -u drupal -p root --single-transaction --quick --lock-tables=false > copia_seguridad.sql
 ~~~
 
 Para recuperar la base de datos tendremos que ejecutar el comando:
 
 ~~~
-mysql -u usuariodrupal -p dbdrupal < copia_seguridad.sql
+mysql -u drupal -p root < copia_seguridad.sql
 ~~~
 
 Ahora creamos el usuario remoto:
@@ -134,6 +140,19 @@ grant all on drupal.* to drupal@172.22.7.254 identified by 'root';
 ~~~
 
 Por último para que todo funcione tendremos que que entrar en el fichero de configuracion de (/var/www/drupal-8.7.8/sites/default/settings.php) y poner la ip de la maquina correspondiente para que todo funcione.
+
+~~~
+$databases['default']['default'] = array (
+  'database' => 'drupal',
+  'username' => 'drupal',
+  'password' => 'root',
+  'prefix' => '',
+  'host' => '172.22.7.254',
+  'port' => '3306',
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+~~~
 
 ## TAREA 4
 
@@ -172,6 +191,12 @@ Y para terminar este paso tendremos que hacer habilitar el fichero monstra.conf 
 a2ensite monstra.conf
 ~~~
 
+Activamos el modo rewrite:
+
+~~~
+a2ensite rewrite
+~~~
+
 Reiniciamos apache2:
 
 ~~~
@@ -189,3 +214,23 @@ Pasamos a poner los parametros del usuario administrador:
 Una vez puestro los parametros de usuario ya tendremos nuestra página:
 
 ![Tercera página](img/monstra3.png)
+
+## TAREA 5
+
+Para poder mandar un correo desde drupal tendremos que instalar postfix:
+
+~~~
+apt-get install postfix
+~~~
+
+A continuación entramos en el fichero de configuración (/etc/postfix/main.cf) y tendremos que buscar la linea donde pone *relayhost* y poner la siguiente configuración:
+
+~~~
+relayhost = babuino-smtp.gonzalonazareno.org
+~~~
+
+Y por último reiniciamos postfix:
+
+~~~
+systemctl restart postfix
+~~~
