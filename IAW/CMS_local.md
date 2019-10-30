@@ -14,14 +14,10 @@ A continuacion instalamos mysql:
 apt-get install mariadb-server-10.3
 ~~~
 
-Pasamos a crear un base de datos con el nombre de drupal, para ello entramos en la base de datos de mariadb:
-
-
-
 Y por ultimo la ultima version de php:
 
 ~~~
-apt-get install php7.3
+apt-get install php7.3 php7.3-gd
 ~~~
 
 ## TAREA 2
@@ -118,3 +114,21 @@ Para terminar vamos a añadir una extensión yo he escogido la de compartir las 
 ![Sexta página](img/drupal6.png)
 
 ## TAREA 3
+
+Pasamos a crear una copia de seguridad de la base de datos que lo haremos con el siguiente comando:
+
+~~~
+mysqldump -u usuariodrupal -p dbdrupal --single-transaction --quick --lock-tables=false > copia_seguridad.sql
+~~~
+
+Para recuperar la base de datos tendremos que ejecutar el comando:
+
+~~~
+mysql -u usuariodrupal -p dbdrupal < copia_seguridad.sql
+~~~
+
+Ahora creamos el usuario remoto:
+
+~~~
+grant all on drupal.* to drupal@172.22.7.254 identified by 'root';
+~~~
