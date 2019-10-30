@@ -132,3 +132,60 @@ Ahora creamos el usuario remoto:
 ~~~
 grant all on drupal.* to drupal@172.22.7.254 identified by 'root';
 ~~~
+
+Por último para que todo funcione tendremos que que entrar en el fichero de configuracion de (/var/www/drupal-8.7.8/sites/default/settings.php) y poner la ip de la maquina correspondiente para que todo funcione.
+
+## TAREA 4
+
+Vamos a instalar un nuevo CMS en mi caso Monstra para empezar tendremos que instalar en nuestro servidor php, apache..:
+
+~~~
+apt-get install apache2 php7.3 libapache2-mod-php7.3 php7.3-common php7.3-sqlite php7.3-curl php7.3-intl php7.3-mbstring php7.3-xmlrpc php7.3-mysql php7.3-gd php7.3-xml php7.3-cli php7.3-zip mariadb-server-10.3
+~~~
+
+Descargamos monstra y lo movemos a la ruta /var/www/html/ y le damos permisos:
+
+~~~
+root@debian2:/var/www/html# chown -R www-data:www-data monstra
+~~~
+
+Con esto tendremos que habilitar el sitio y configurar el fichero de configuración que se encuentra en (/etc/apache2/sites-available), creamos un fichero llamado monstra.conf y tendremos que introducir la siguiente configuración:
+
+~~~
+<VirtualHost *:80>
+        ServerAdmin webmaster@localhost
+        ServerName www.ismael-monstra.org
+        DocumentRoot /var/www/html/monstra
+        <Directory /var/www/html/monstra/>
+                Options Indexes FollowSymLinks
+                AllowOverride All
+                Require all granted
+        </Directory>
+        ErrorLog /var/log/apache2/monstra_error.log
+        CustomLog /var/log/apache2/monstra_access.log combined
+</VirtualHost>
+~~~
+
+Y para terminar este paso tendremos que hacer habilitar el fichero monstra.conf con el comando:
+
+~~~
+a2ensite monstra.conf
+~~~
+
+Reiniciamos apache2:
+
+~~~
+systemctl restart apache2
+~~~
+
+Con esto empezamos la instalación de monstra:
+
+![Primera página](img/monstra1.png)
+
+Pasamos a poner los parametros del usuario administrador:
+
+![Segunda página](img/monstra2.png)
+
+Una vez puestro los parametros de usuario ya tendremos nuestra página:
+
+![Tercera página](img/monstra3.png)
