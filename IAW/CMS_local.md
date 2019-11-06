@@ -234,3 +234,7 @@ Y por último reiniciamos postfix:
 ~~~
 systemctl restart postfix
 ~~~
+
+Ahora solo queda la prueba. En mi caso he intentado recuperar mi contraseña de una cuenta de grupal y este ha sido el correo resultante:
+
+![Primera página](img/correo.png)
