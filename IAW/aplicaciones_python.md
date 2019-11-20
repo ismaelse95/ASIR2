@@ -102,25 +102,25 @@ También tenemos que cambiar para ver el contenido estático:
 
 1.- Añadimos la siguiente linea en el fichero settings.py:
 
-	~~~	
+~~~	
 	STATIC_ROOT = '/var/www/html/django_tutorial/static'
-	~~~
+~~~
 
 2.- Creamos el contenido:
 
-	~~~
+~~~
 	python3 manage.py collectstatic
-	~~~
+~~~
 
 3.- Añadimos el contenido estático en el virtual host:
 
-	~~~
+~~~
 	Alias /static /var/www/html/django_tutorial/static
 
   	<Directory /var/www/html/django_tutorial/static>
     	Require all granted
   	</Directory>
-	~~~
+~~~
 
 Con eso ya tendriamos nuestra página configurada:
 
