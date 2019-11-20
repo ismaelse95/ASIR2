@@ -80,7 +80,7 @@ Vamos a pasar a crear el sitio en apache2 para ello nos dirigimos al directorio 
 Con esto podemos habilitar el sitio con el comando:
 
 ~~~
-ln -s /etc/apache2/sites-available/drupal.conf /etc/apache2/sites-enabled/drupal.conf
+ln -s /etc/apache2/sites-available/drupal.conf /etc/apache2/sites-enabled/
 ~~~
 
 Activamos el modo rewrite:
