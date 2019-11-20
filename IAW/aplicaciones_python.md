@@ -100,19 +100,19 @@ ALLOWED_HOSTS = ['www.ismael-django.com']
 
 También tenemos que cambiar para ver el contenido estático:
 
-	1.- Añadimos la siguiente linea en el fichero settings.py:
+1.- Añadimos la siguiente linea en el fichero settings.py:
 
 	~~~	
 	STATIC_ROOT = '/var/www/html/django_tutorial/static'
 	~~~
 
-	2.- Creamos el contenido:
+2.- Creamos el contenido:
 
 	~~~
 	python3 manage.py collectstatic
 	~~~
 
-	3.- Añadimos el contenido estático en el virtual host:
+3.- Añadimos el contenido estático en el virtual host:
 
 	~~~
 	Alias /static /var/www/html/django_tutorial/static
