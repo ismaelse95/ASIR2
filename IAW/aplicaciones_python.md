@@ -78,6 +78,12 @@ Hacemos el migrate para crear las bases de datos:
 python3 manage.py migrate
 ~~~
 
+Creamos un usuario para la base de datos:
+
+~~~
+python3 manage.py createsuperuser
+~~~
+
 Y por último arrancamos el server:
 
 ~~~
