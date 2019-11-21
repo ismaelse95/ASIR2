@@ -50,3 +50,9 @@ Entramos en la zona usuario:
 
 ## TAREA 2
 
+Cambiamos en la página principal para que aparezca mi nombre:
+
+![Primera página](img/python3.png)
+
+## TAREA 3
+
