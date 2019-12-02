@@ -1,6 +1,6 @@
 # DESPLIEGUE DE CMS
 
-## TAREA 1
+## TAREA 1, 2 y 3
 
 Lo primero que tendremos que hacer para realizar esta tarea sera escoger dos servicios de hosting distinto en mi caso lucus y cdmon.
 
