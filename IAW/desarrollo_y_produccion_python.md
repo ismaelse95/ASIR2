@@ -180,15 +180,15 @@ Cargamos la base de datos con el entorno virtual activado:
 
 ## TAREA 4
 
-Vamos a cambiar la imagen de nuestra página desde desarrollo, para ello subimos la imagen a nuestro git la ruta es: (../static/img). Una vez subida hacemos un push en nuestra máquina de desarrollo.
+Vamos a cambiar la imagen de nuestra página desde desarrollo, para ello subimos la imagen a nuestro git la ruta es: `../static/img`. Una vez subida hacemos un push en nuestra máquina de desarrollo.
 
-Nos vamos nuestra máquina de producción y tenemos que hacer un (git pull) para que descargar los ficheros que no teniamos.
+Nos vamos nuestra máquina de producción y tenemos que hacer un `git pull` para que descargar los ficheros que no teniamos, también tenemos que reiniciar apache con el comando `systemctl restart apache2`.
 
 Una vez terminado nos dirigimos a nuestra página y comprobamos que los cambios se han echo correctamente.
 
 ![Primera página](img/python7.png)
 
-Vamos a crear una nueva tabla en la base de datos para ello nos vamos al fichero (centro/models.py) y tendremos que introduccir la siguiente configuración:
+Vamos a crear una nueva tabla en la base de datos para ello nos vamos al fichero `centro/models.py` y tendremos que introduccir la siguiente configuración:
 
 ~~~
 class Modulos(models.Model):   
@@ -204,7 +204,7 @@ class Modulos(models.Model):
          verbose_name_plural="Modulos"
 ~~~
 
-Creamos una nueva migración pero para ello tendremos que tener los mismo permisos que la carpeta donde se encuentra nuestro entorno virtual, en mi caso es (ismael:ismael) le cambiaremos los permisos con el siguiente comando:
+Creamos una nueva migración pero para ello tendremos que tener los mismo permisos que la carpeta donde se encuentra nuestro entorno virtual, en mi caso es `ismael:ismael` le cambiaremos los permisos con el siguiente comando:
 
 ~~~
 chown -R ismael:ismael /iaw_gestion/
@@ -221,7 +221,7 @@ python3 manage.py migrate
 ~~~
 
 
-Añadimos un nuevo modelo en la base de datos para ello nos vamos al fichero (centro/admin.py) y tendremos que añadir Modulos en la siguiente linea:
+Añadimos un nuevo modelo en la base de datos para ello nos vamos al fichero `centro/admin.py` y tendremos que añadir Modulos en la siguiente linea:
 
 ~~~
 from centro.models import Cursos,Alumnos,Departamentos,Profesores,Areas,Modulos
