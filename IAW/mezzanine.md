@@ -31,4 +31,24 @@ Y a continuación iniciamos mezzanine.
 python manage.py runserver
 ~~~
 
-![Primera página](img/mezzanine.png)
+![Primera página](img/mezzanine1.png)
+
+## Personaliza la página y añade contenido.
+
+![Primera página](img/mezzanine2.png)
+
+## Guarda los ficheros generados durante la instalación en un repositorio github. Guarda también en ese repositorio la copia de seguridad de la bese de datos.
+
+Primero hacemos las copias de seguridad de nuestra base de datos.
+
+~~~
+python manage.py dumpdata > db.json
+~~~
+
+~~~
+python manage.py dumpdata admin > admin.json
+~~~
+
+Ahora subimos al repositorio los archivos.
+
+
