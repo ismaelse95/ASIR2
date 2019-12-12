@@ -1,7 +1,7 @@
 # Instalación Mezzanine
 
 
-## Instala el CMS en el entorno de desarrollo. Debes utilizar un entorno virtual. 
+## Instalación del CMS en el entorno de desarrollo utilizando un entorno virtual. 
 
 Vamos a instalar mezzanine en un entorno virtual para ello creamos el entorno y entramos en el entorno:
 
@@ -33,11 +33,11 @@ python manage.py runserver
 
 ![Primera página](img/mezzanine1.png)
 
-## Personaliza la página y añade contenido.
+## Personalización de la página y contenido.
 
 ![Primera página](img/mezzanine2.png)
 
-## Guarda los ficheros generados durante la instalación en un repositorio github. Guarda también en ese repositorio la copia de seguridad de la bese de datos.
+## Guardado de los ficheros generados durante la instalación y copia de seguridad de la bese de datos en un repositorio github.
 
 Primero hacemos las copias de seguridad de nuestra base de datos.
 
@@ -49,6 +49,29 @@ python manage.py dumpdata > db.json
 python manage.py dumpdata admin > admin.json
 ~~~
 
-Ahora subimos al repositorio los archivos.
+Ahora subimos al repositorio git los archivos.
 
+## Despliegue de la aplicación en tu entorno de producción.
+
+Nos vamos a la siguiente ruta `cd /usr/share/nginx/html/` y clonamos el repositorio.
+
+~~~
+git clone https://github.com/ismaelse95/blogmezzanine.git
+~~~
+
+Creamos el entorno virtual y lo activamos.
+
+~~~
+python3 -m venv mezzanine
+~~~
+
+~~~
+source mezzanine/bin/activate
+~~~
+
+Ahora pasamos a intalar el fichero `requeriment.txt`.
+
+~~~
+pip3 install -r requeriment.txt
+~~~
 
