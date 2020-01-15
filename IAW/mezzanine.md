@@ -16,7 +16,7 @@ source mezzanine/bin/activate
 Creamos los fichero de mezzanine.
 
 ~~~
-mezzanine-project myproject
+mezzanine-project blogmezzanine
 ~~~
 
 Creamos la base de datos.
@@ -51,7 +51,7 @@ python manage.py dumpdata admin > admin.json
 
 Ahora subimos al repositorio git los archivos.
 
-## Despliegue de la aplicación en tu entorno de producción.
+## Despliegue de la aplicación en entorno de producción.
 
 Nos vamos a la siguiente ruta `cd /usr/share/nginx/html/` y clonamos el repositorio.
 
@@ -73,5 +73,15 @@ Ahora pasamos a intalar el fichero `requeriment.txt`.
 
 ~~~
 pip3 install -r requeriment.txt
+~~~
+
+Instalamos los modulos tanto en el entorno como sin entorno para que permita que python trabaje con mysql:
+
+~~~
+apt-get install python3-mysqldb
+~~~
+
+~~~
+pip3 install mysql-connector-python
 ~~~
 
