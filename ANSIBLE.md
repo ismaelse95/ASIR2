@@ -26,17 +26,30 @@ Para ejecutar un modulo en ansible con el modulo ping(sirve para ver si está co
 ansible -m ping all
 ~~~
 
-Tendremos que crear un fichero Playbooks que será con extension .yaml.
+Tendremos que crear un fichero Playbooks que será con extension `.yaml`.
 
 ~~~
 nano site.yaml
 ~~~
 
-Dentro tendremos las plays que vamos a ejecutar.
+Dentro tendremos las plays que vamos a ejecutar. En este caso vamos a ejecutar el role commons que hace un conjunto de comandos de actualizacion del sistema.
 
 ~~~
 - hosts: all
   become: true
   roles:
    - role: commons
+~~~
+
+El rol commons tiene la siguiente información:
+
+~~~
+- name: Ensure system is updated
+  apt: update_cache=yes upgrade=yes
+~~~
+
+Para ejecutar el rol commons:
+
+~~~
+ansible-playbook -b site.yaml
 ~~~
