@@ -23,3 +23,4 @@ Accedemos al hostname:8080/manage
 
 cd /var/lib/tomcat9/webapps --> para ver los war que tenemos instalados en nuestro tomcat.
 Para introducir un war en el misma ruta (/var/lib/tomcat9/webapps) cogemos el enlace war y lo enviamos a la ruta con el comando wget.
+Mas opciones de tomcat en el siguiente [link](https://fp.josedomingo.org/iawgs/u05/tomcat8.html).
