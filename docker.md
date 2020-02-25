@@ -32,3 +32,7 @@ Para subir la imagen a docker desde la máquina de desarrollo --> `docker push i
 En la máquina de producción hacemos el pull --> `docker pull ismaelse95/mkdocs:v1`
 
 En producción levantamos el contenedor --> `docker run -d --name ismael -p 8080:80 ismaelse95/mkdocs:v1`
+
+-------------------------------------------------
+
+Para conectar desde otro docker a la base de datos --> docker run -it --rm --link servidor_mysql:mysql mariadb mysql -u user_wp -p -h mysql

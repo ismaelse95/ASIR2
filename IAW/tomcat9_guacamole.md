@@ -1,3 +1,8 @@
+# Despliegue CMS en java
+
+## Guacamole y su funcionalidad
+
+En esta práctica vamos a coger un cms e instalarlo con java, en mi caso guacamole. Éste CMS nos permite conectarnos desde 
 
 ~~~
 apt-get install libcairo2-dev libjpeg62-turbo-dev libpng-dev libossp-uuid-dev gcc make tomcat9 tomcat9-admin tomcat9-user
@@ -22,28 +27,14 @@ cd guacamole-server-0.9.14
 
 ~~~
 make
-~~~
-
-~~~
 make install
-~~~
-
-~~~
 ldconfig
-~~~
-
-~~~
-wget http://archive.apache.org/dist/guacamole/1.0.0/source/guacamole-client-1.0.0.tar.gz
-~~~
-
-~~~
-tar -zxf guacamole-client-1.0.0.tar.gz
 ~~~
 
 Descargamos el .war de guacamole de la página web y lo movemos a la carpeta webapps de tomcat9:
 
 ~~~
-cp guacamole-1.0.0.war /var/lib/tomcat9/webapps/guacamole.war
+cp guacamole-1.0.0.war /var/lib/tomcat9/webapps/
 ~~~
 
 Con esto ya podemos entrar a la página de inicio, pero no podemos acceder:
@@ -62,35 +53,45 @@ auth-provider: net.sourceforge.guacamole.net.basic.BasicFileAuthenticationProvid
 basic-user-mapping: /etc/guacamole/user-mapping.xml
 ~~~
 
+Creamos el enlace simbolico dirigido hacia la carpeta `.guacamole`.
+
 ~~~
 ln -s guacamole.properties /usr/share/tomcat9/.guacamole/
 ~~~
 
+Ahora pasamos a crear el mapping para poder acceder mediante el navegador, para ello nos diriguimos a la carpeta `/etc/guacamole/` y creamos el fichero `user-mapping.xml` e introducimos la siguiente configuración
+
 ~~~
 <user-mapping>
-        <authorize 
-         username="vagrant" 
-         password="63623900c8bbf21c706c45dcb7a2c083" 
-         encoding="md5">
-                <connection name="SSH">
-                        <protocol>ssh</protocol>
-                        <param name="hostname">192.168.1.129</param>
-                        <param name="port">22</param>
-                        <param name="username">alexrr</param>
-                </connection>
-                <connection name="Remote Desktop">
-                <protocol>rdp</protocol>
-                        <param name="hostname">192.168.1.1</param>
-                        <param name="port">3389</param>
-                </connection>
-        </authorize>
+  <authorize
+    username="usuario"
+    password="f8032d5cae3de20fcec887f395ec9a6a"
+    encoding="md5">
+   <connection name="SSH">
+    <protocol>ssh</protocol>
+    <param name="hostname">172.22.3.68</param>
+    <param name="port">22</param>
+    <param name="username">usuario</param>
+   </connection>
+  </authorize>
 </user-mapping>
 ~~~
+
+Le damos permiso al fichero mapping y reiniciamos tomcat:
 
 ~~~
 chmod 600 user-mapping.xml
 chown tomcat:tomcat user-mapping.xml
 ~~~
+
+~~~
+/etc/init.d/tomcat9 restart
+/etc/init.d/guacd restart
+~~~
+
+Con esto ya podriamos conectarnos sin apache mediante ssh:
+
+![Primera página](img/guaca4.png)
 
 ~~~
 apt install apache2
@@ -101,4 +102,20 @@ apt install apache2
                connectionTimeout="20000"
                URIEncoding="UTF-8"
                redirectPort="8443" />
+~~~
+
+~~~
+<Valve className="org.apache.catalina.valves.RemoteIpValve"
+               internalProxies="127.0.0.1"
+               remoteIpHeader="x-forwarded-for"
+               remoteIpProxiesHeader="x-forwarded-by"
+               protocolHeader="x-forwarded-proto" />
+~~~
+
+~~~
+a2enmod proxy
+a2enmod proxy_http
+a2enmod proxy_balancer
+a2enmod lbmethod_byrequests
+a2enmod proxy_wstunnel
 ~~~
