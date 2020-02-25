@@ -2,7 +2,7 @@
 
 ## Guacamole y su funcionalidad
 
-En esta práctica vamos a coger un cms e instalarlo con java, en mi caso guacamole. Éste CMS nos permite conectarnos desde 
+En esta práctica vamos a coger un cms e instalarlo con java, en mi caso guacamole. Éste CMS nos permite conectarnos desde el navegador, para ello vamos a empezar por instalar paquetes necesarios para poder acceder desde el navegador:
 
 ~~~
 apt-get install libcairo2-dev libjpeg62-turbo-dev libpng-dev libossp-uuid-dev gcc make tomcat9 tomcat9-admin tomcat9-user
@@ -12,16 +12,20 @@ apt-get install libcairo2-dev libjpeg62-turbo-dev libpng-dev libossp-uuid-dev gc
 apt-get install libavcodec-dev libavutil-dev libswscale-dev libpango1.0-dev libssh2-1-dev libpango1.0-dev libtelnet-dev libvncserver-dev libpulse-dev libssl-dev libvorbis-dev libwebp-dev libfreerdp-dev
 ~~~
 
+Descargamos el paquete servidor de guacamole y lo descomprimimos:
+
 ~~~
 wget http://archive.apache.org/dist/guacamole/1.0.0/source/guacamole-server-1.0.0.tar.gz
 ~~~
 
 ~~~
-tar -xzf guacamole-server-0.9.14.tar.gz
-cd guacamole-server-0.9.14
+tar -xzf guacamole-server-1.0.0.tar.gz
 ~~~
 
+Entraremos en la carpeta descomprimida y tendremos que instalar y configurarla para poder desplegarla con java:
+
 ~~~
+cd guacamole-server-1.0.0
 ./configure --with-init-dir=/etc/init.d
 ~~~
 
@@ -97,6 +101,8 @@ Con esto ya podriamos conectarnos sin apache mediante ssh:
 apt install apache2
 ~~~
 
+Ahora pasaremos a crear un proxy inverso con apache2 para ello tendremos que seguir los siguientes pasos, donde primero vamos a configurar el conector http en el fichero `/var/lib/tomcat9/conf/server.xml`
+
 ~~~
 <Connector port="8080" protocol="HTTP/1.1"
                connectionTimeout="20000"
@@ -112,6 +118,8 @@ apt install apache2
                protocolHeader="x-forwarded-proto" />
 ~~~
 
+Vamos a pasar a habilitar los mod proxy:
+
 ~~~
 a2enmod proxy
 a2enmod proxy_http
@@ -119,3 +127,19 @@ a2enmod proxy_balancer
 a2enmod lbmethod_byrequests
 a2enmod proxy_wstunnel
 ~~~
+
+Ahora vamos a pasar a crear un virtualhost para configurar el proxy:
+
+~~~
+<VirtualHost *:80>
+    ProxyPreserveHost On
+    ProxyRequests Off
+    ServerName guacamole.ismael.org
+    ProxyPass / http://localhost:8080/guacamole-1.0.0
+    ProxyPassReverse / http://localhost:8080/guacamole-1.0.0
+</VirtualHost>
+~~~
+
+Con el virtualhost creado ya podemos acceder mediante la url creada:
+
+![Primera página](img/guaca5.png)
