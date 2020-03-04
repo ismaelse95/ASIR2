@@ -199,7 +199,7 @@ CMD ["/usr/local/bin/script.sh"]
 Creamos el contenedor.
 
 ~~~
-docker build -t juandi97/tarea2:v1 .
+docker build -t ismaelse95/tarea2:v1 .
 ~~~
 
 Ahora creamos la red.
