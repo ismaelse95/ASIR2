@@ -271,12 +271,6 @@ Y levantamos docker-compose.
 docker-compose up -d
 ~~~
 
-## Ejecución de una aplicación PHP en docker
-
-En este ejercicio vamos a utilizar nginx para servidor web y también utilizaremos php-fpm.
-
-Vamos a configurar docker-compose
-
 ## Ejecución de un CMS en docker. 1
 
 Vamos a crear una nueva red utilizando el CMS de mediawiki, para crear la red ejecutamos el siguiente comando.
