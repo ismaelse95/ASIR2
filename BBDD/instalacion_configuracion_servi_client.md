@@ -71,7 +71,83 @@ invitado_db=>
 
 ## Prueba desde un cliente remoto del intérprete de comandos de MongoDB.
 
+Para probar el interprete de comandos de MongoDB en un cliente primero vamos a tener que hacer una instalación rápida de mongo server para ello vamos a introducir un nuevo repositorio.
+~~~
+wget https://www.mongodb.org/static/pgp/server-4.4.asc -qO- | sudo apt-key add -
+~~~
 
+~~~
+sudo nano /etc/apt/sources.list.d/mongodb-org.list
+~~~
+
+Introducimos la siguiente linea en el fichero.
+~~~
+deb http://repo.mongodb.org/apt/debian buster/mongodb-org/4.4 main
+~~~
+
+Actualizamos los repositorios e instalamos mongo-server.
+~~~
+sudo apt update
+sudo apt install -y mongodb-org
+~~~
+
+Entramos a mongo y creamos un nuevo usuario.
+~~~
+debian@servidor:~$ mongo --port 27017
+MongoDB shell version v4.4.2
+connecting to: mongodb://127.0.0.1:27017/?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("02db5fb1-f3c6-4d30-a471-f7846f10ebaf") }
+MongoDB server version: 4.4.2
+---
+The server generated these startup warnings when booting:
+        2020-12-01T10:21:35.272+01:00: Using the XFS filesystem is strongly recommended with the WiredTiger storage engine. See http://dochub.mongodb.org/core/prodnotes-filesystem
+        2020-12-01T10:21:38.949+01:00: Access control is not enabled for the database. Read and write access to data and configuration is unrestricted
+        2020-12-01T10:21:38.949+01:00: /sys/kernel/mm/transparent_hugepage/enabled is 'always'. We suggest setting it to 'never'
+---
+---
+        Enable MongoDB's free cloud-based monitoring service, which will then receive and display
+        metrics about your deployment (disk utilization, CPU, operation statistics, etc).
+
+        The monitoring data will be available on a MongoDB website with a unique URL accessible to you
+        and anyone you share the URL with. MongoDB may use this information to make product
+        improvements and to suggest MongoDB products and deployment options to you.
+
+        To enable free monitoring, run the following command: db.enableFreeMonitoring()
+        To permanently disable this reminder, run the following command: db.disableFreeMonitoring()
+---
+> use admin
+switched to db admin
+> db.createUser({user: "ismael", pwd: "ismael", roles: [{role: "root", db: "admin"}]})
+Successfully added user: {
+	"user" : "ismael",
+	"roles" : [
+		{
+			"role" : "root",
+			"db" : "admin"
+		}
+	]
+}
+>
+~~~
+
+Ahora nos vamos al fichero de configuración de mongo (/etc/mongod.conf) y tenemos que poner el puerto por el que va a escuchar.
+~~~
+# network interfaces
+net:
+  port: 27017
+  bindIp: 0.0.0.0
+~~~
+
+Abrimos los puertos y reiniciamos mongod.
+~~~
+sudo iptables -A INPUT -p tcp --dport 27017 -j ACCEPT
+sudo systemctl restart mongod
+~~~
+
+Nos conectamos a la base de datos de mongo con el siguiente comando.
+~~~
+mongo -u ismael -p ismael 192.168.0.148
+~~~
 
 ## Realización de una aplicación web en cualquier lenguaje que conecte con el servidor MySQL desde un cliente remoto tras autenticarse y muestre alguna información almacenada en el mismo.
 
