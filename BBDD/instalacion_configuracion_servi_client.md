@@ -69,8 +69,11 @@ Digite «help» para obtener ayuda.
 invitado_db=>
 ~~~
 
-• Prueba desde un cliente remoto del intérprete de comandos de MongoDB.
-• Realización de una aplicación web en cualquier lenguaje que conecte con el servidor MySQL desde un cliente remoto tras autenticarse y muestre alguna información almacenada en el mismo.
+## Prueba desde un cliente remoto del intérprete de comandos de MongoDB.
+
+
+
+## Realización de una aplicación web en cualquier lenguaje que conecte con el servidor MySQL desde un cliente remoto tras autenticarse y muestre alguna información almacenada en el mismo.
 
 Para empezar lo primero que tenemos que hacer es instalar mariadb, para ello tendremos que ejecutar el siguiente comando.
 ~~~
@@ -219,8 +222,13 @@ Por ultimo reiniciamos apache2.
 sudo systemctl restart apache2
 ~~~
 
+Entramos desde el navegador y vemos que podemos acceder correctamente.
 
 
 
-• Instalación de SQL Developer sobre Windows como cliente remoto de ORACLE.
-• Instalación y prueba desde un cliente remoto de Oracle Enterprise Manager.
+
+## Instalación de SQL Developer sobre Windows como cliente remoto de ORACLE.
+
+
+
+## Instalación y prueba desde un cliente remoto de Oracle Enterprise Manager.
