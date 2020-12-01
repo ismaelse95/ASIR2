@@ -224,8 +224,9 @@ sudo systemctl restart apache2
 
 Entramos desde el navegador y vemos que podemos acceder correctamente.
 
+![Inicio PHP](/imagenes/phpinicio.png)
 
-
+![Tablas PHP](/imagenes/phpentrada.png)
 
 ## Instalación de SQL Developer sobre Windows como cliente remoto de ORACLE.
 
