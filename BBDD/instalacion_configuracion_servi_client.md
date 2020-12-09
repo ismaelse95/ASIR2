@@ -130,6 +130,20 @@ Successfully added user: {
 >
 ~~~
 
+Vamos a pasar ahora a crear un usuario para conectarse desde un cliente para ello accedemos a nuestro server con nuestro usuario.
+~~~
+mongo --authenticationDatabase "admin" -u "ismael" -p "ismael"
+~~~
+
+Una vez dentro creamos la base de datos invitado y creamos un usuario.
+~~~
+use invitados
+~~~
+
+~~~
+db.createUser({user: "invitado",pwd: "invitado",roles: ["dbOwner"]})
+~~~
+
 Ahora nos vamos al fichero de configuración de mongo (/etc/mongod.conf) y tenemos que poner el puerto por el que va a escuchar.
 ~~~
 # network interfaces
@@ -138,15 +152,32 @@ net:
   bindIp: 0.0.0.0
 ~~~
 
+También vamos a editar el apartado de seguridad dentro del fichero (/etc/mongod.conf) donde tendremos que poner lo siguiente.
+~~~
+security:
+  authorization: enabled
+~~~
+
 Abrimos los puertos y reiniciamos mongod.
 ~~~
 sudo iptables -A INPUT -p tcp --dport 27017 -j ACCEPT
 sudo systemctl restart mongod
 ~~~
 
-Nos conectamos a la base de datos de mongo con el siguiente comando.
+Nos conectamos a la base de datos de mongo con el siguiente comando desde un cliente Debian.
 ~~~
-mongo -u ismael -p ismael 192.168.0.148
+ismael@ismael:~$ mongo -u invitado -p invitado 192.168.0.121/invitados
+MongoDB shell version v4.4.2
+connecting to: mongodb://192.168.0.121:27017/invitado?compressors=disabled&gssapiServiceName=mongodb
+Implicit session: session { "id" : UUID("121aca55-417d-4954-992c-0ab9178ebcd2") }
+MongoDB server version: 4.4.2
+~~~
+
+En el servidor cree dos colleciones desde el usuario de invitados y para verlas desde el cliente podemos ejecutar el siguiente comando.
+~~~
+> show collections
+usuarios
+compras
 ~~~
 
 ## Realización de una aplicación web en cualquier lenguaje que conecte con el servidor MySQL desde un cliente remoto tras autenticarse y muestre alguna información almacenada en el mismo.
