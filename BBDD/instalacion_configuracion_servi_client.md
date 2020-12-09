@@ -347,7 +347,7 @@ Una vez que lo tengamos tendremos que descomprimirlo y para abrir el programar a
 
 ![Developer](imagenes/developer.png)
 
-Una vez instalado nuestra base de datos vamos a crear un nuevo usuario para poder acceder mediante SQL Developer.
+Ahora vamos a crear un nuevo usuario para poder acceder mediante SQL Developer.
 ~~~
 SQL> create user ismael identified by ismael;
 
@@ -388,3 +388,7 @@ Una vez dentro tengo creadas 3 tablas como vemos a continuación.
 ![Developer](imagenes/developer3.png)
 
 ## Instalación y prueba desde un cliente remoto de Oracle Enterprise Manager.
+
+Nos descargamos Oracle Enterprise Manager del siguiente enlace: https://www.oracle.com/enterprise-manager/downloads/win-x86-64-13c-rel4-downloads.html
+
+Ahora pasamos a instalarlo
