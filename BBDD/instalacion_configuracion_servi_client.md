@@ -389,6 +389,10 @@ Una vez dentro tengo creadas 3 tablas como vemos a continuación.
 
 ## Instalación y prueba desde un cliente remoto de Oracle Enterprise Manager.
 
-Nos descargamos Oracle Enterprise Manager del siguiente enlace: https://www.oracle.com/enterprise-manager/downloads/win-x86-64-13c-rel4-downloads.html
+Tenemos instalado en una máquina oracle 11g y para acceder a ella mediante Oracle Enterprise Manager es entrar en el siguiente enlace https://192.168.0.152:1158/em en mi caso con esa ip.
 
-Ahora pasamos a instalarlo
+![Enterprise](imagenes/enterprise.png)
+
+![Enterprise](imagenes/enterprise2.png)
+
+![Enterprise](imagenes/enterprise3.png)
