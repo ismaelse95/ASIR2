@@ -395,4 +395,6 @@ Tenemos instalado en una máquina oracle 11g y para acceder a ella mediante Orac
 
 ![Enterprise](imagenes/enterprise2.png)
 
+Podemos ver las 3 tablas creadas en nuestro servior desde Oracle Enterprise Manager.
+
 ![Enterprise](imagenes/enterprise3.png)
