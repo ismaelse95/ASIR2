@@ -341,6 +341,12 @@ He introducido información desde el servidor y desde el cliente con phpmyadmin 
 
 ## Instalación de SQL Developer sobre Windows como cliente remoto de ORACLE.
 
+Descargarmos SQL Developer del siguiente enlace: https://www.oracle.com/tools/downloads/sqldev-downloads.html
+
+Una vez que lo tengamos tendremos que descomprimirlo y para abrir el programar abriremos el archivo sqldeveloper como vemos en la imagen.
+
+![Developer](imagenes/developer.png)
+
 Una vez instalado nuestra base de datos vamos a crear un nuevo usuario para poder acceder mediante SQL Developer.
 ~~~
 SQL> create user ismael identified by ismael;
@@ -369,7 +375,7 @@ Creamos el SID para poder acceder, lo creamos con el comando:
 set ORACLE_SID=orcl
 ~~~
 
-Nos dirigimos a SQL Developer y nos vamos al más como vemos en la imagen.
+Nos dirigimos a SQL Developer y nos vamos al más, como vemos en la imagen.
 
 ![Developer](imagenes/developer1.png)
 
