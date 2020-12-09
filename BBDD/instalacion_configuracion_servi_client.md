@@ -335,8 +335,50 @@ Entramos desde el navegador y vemos que podemos acceder correctamente.
 
 ![Tablas PHP](imagenes/phpentrada.png)
 
+He introducido información desde el servidor y desde el cliente con phpmyadmin vemos las tres tablas que he creado.
+
+![Tablas PHP](imagenes/php4.png)
+
 ## Instalación de SQL Developer sobre Windows como cliente remoto de ORACLE.
 
+Una vez instalado nuestra base de datos vamos a crear un nuevo usuario para poder acceder mediante SQL Developer.
+~~~
+SQL> create user ismael identified by ismael;
 
+Usuario creado.
+
+SQL> grant connect to ismael;
+
+Concesi¾n terminada correctamente.
+
+SQL> grant resource to ismael;
+
+Concesi¾n terminada correctamente.
+
+SQL> grant unlimited tablespace to ismael;
+
+Concesi¾n terminada correctamente.
+
+SQL> alter user ismael identified by ismael account unlock;
+
+Usuario modificado.
+~~~
+
+Creamos el SID para poder acceder, lo creamos con el comando:
+~~~
+set ORACLE_SID=orcl
+~~~
+
+Nos dirigimos a SQL Developer y nos vamos al más como vemos en la imagen.
+
+![Developer](imagenes/developer1.png)
+
+Ponemos el nombre con el cual nos queremos conectar, también el nombre de usuario y contraseña y nos conectamos.
+
+![Developer](imagenes/developer2.png)
+
+Una vez dentro tengo creadas 3 tablas como vemos a continuación.
+
+![Developer](imagenes/developer3.png)
 
 ## Instalación y prueba desde un cliente remoto de Oracle Enterprise Manager.
