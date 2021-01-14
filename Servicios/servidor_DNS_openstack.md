@@ -10,15 +10,24 @@ sudo apt install bind9
 
 Una vez instalado vamos a configurarlo, tendremos que acceder a /etc/bind/named.conf.local y tendremos que añadir las siguientes lineas.
 ~~~
+acl interna { 10.0.0.0/24; localhost; };
+acl externa { 172.22.0.0/16; 192.168.202.2; };
+
 view externa {
-        match-clients {172.22.0.0/15; 192.168.202.2;};
+        match-clients {172.22.0.0/16; 192.168.202.2;};
         allow-recursion { any; };
 
         include "/etc/bind/zones.rfc1918";
+        include "/etc/bind/named.conf.default-zones";
 
         zone "ismaelsantiago.gonzalonazareno.org" {
           type master;
           file "/var/cache/bind/db.externa.ismaelsantiago.gonzalonazareno.org";
+        };
+
+        zone "22.172.in-addr.arpa" {
+          type master;
+          file "db.22.172";
         };
 };
 
@@ -27,6 +36,7 @@ view interna {
         allow-recursion { any; };
 
         include "/etc/bind/zones.rfc1918";
+        include "/etc/bind/named.conf.default-zones";
 
         zone "ismaelsantiago.gonzalonazareno.org" {
           type master;
@@ -49,6 +59,7 @@ view DMZ {
         allow-recursion { any; };
 
         include "/etc/bind/zones.rfc1918";
+        include "/etc/bind/named.conf.default-zones";
 
         zone "ismaelsantiago.gonzalonazareno.org" {
           type master;
@@ -284,11 +295,62 @@ freston.ismaelsantiago.gonzalonazareno.org. 86400 IN A 10.0.1.9
 ;; MSG SIZE  rcvd: 154
 ~~~
 
+Consulta desde el exterior.
+~~~
+ismael@ismael:~$ dig ns dulcinea.ismaelsantiago.gonzalonazareno.org
+
+; <<>> DiG 9.11.5-P4-5.1+deb10u2-Debian <<>> ns dulcinea.ismaelsantiago.gonzalonazareno.org
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 48665
+;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 46ceec76db2b069011858d415ffebe1aacc96a9c84f13b49 (good)
+;; QUESTION SECTION:
+;dulcinea.ismaelsantiago.gonzalonazareno.org. IN	NS
+
+;; AUTHORITY SECTION:
+ismaelsantiago.gonzalonazareno.org. 10800 IN SOA dulcinea.ismaelsantiago.gonzalonazareno.org. root.ismaelsantiago.gonzalonazareno.org. 3 604800 86400 2419200 86400
+
+;; Query time: 105 msec
+;; SERVER: 192.168.202.2#53(192.168.202.2)
+;; WHEN: mié ene 13 10:32:10 CET 2021
+;; MSG SIZE  rcvd: 141
+
+ismael@ismael:~$ dig dulcinea.ismaelsantiago.gonzalonazareno.org
+
+; <<>> DiG 9.11.5-P4-5.1+deb10u2-Debian <<>> dulcinea.ismaelsantiago.gonzalonazareno.org
+;; global options: +cmd
+;; Got answer:
+;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 49222
+;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 1, ADDITIONAL: 1
+
+;; OPT PSEUDOSECTION:
+; EDNS: version: 0, flags:; udp: 4096
+; COOKIE: 0cc301bc615cd7c86387dfe95ffebe35fc9862e2427964cc (good)
+;; QUESTION SECTION:
+;dulcinea.ismaelsantiago.gonzalonazareno.org. IN	A
+
+;; ANSWER SECTION:
+dulcinea.ismaelsantiago.gonzalonazareno.org. 86259 IN A	172.22.200.162
+
+;; AUTHORITY SECTION:
+ismaelsantiago.gonzalonazareno.org. 86236 IN NS	dulcinea.ismaelsantiago.gonzalonazareno.org.
+
+;; Query time: 101 msec
+;; SERVER: 192.168.202.2#53(192.168.202.2)
+;; WHEN: mié ene 13 10:32:37 CET 2021
+;; MSG SIZE  rcvd: 130
+~~~
+
 ## Servidor Web
 
 Vamos a instalar en Quijote un servidor web apache para ello vamos a empezar añadiendo una regla DNAT en dulcinea y la regla será la siguiente.
 ~~~
 sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -i eth0 -j DNAT --to 10.0.2.7:80
+
 ~~~
 
 Vamos a instalar el servidor web apache en centos para ello tendremos que ejecutar el siguiente comando.
