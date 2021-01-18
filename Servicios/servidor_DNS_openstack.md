@@ -355,23 +355,73 @@ sudo iptables -t nat -A PREROUTING -p tcp --dport 80 -i eth0 -j DNAT --to 10.0.2
 
 Vamos a instalar el servidor web apache en centos para ello tendremos que ejecutar el siguiente comando.
 ~~~
-dnf install httpd -y
+dnf install httpd php php-fpm -y
+~~~
+
+Creamos el enlace simbólico en el inicio de httpd y php.
+~~~
+[root@quijote ~]# systemctl start httpd php-fpm
+[root@quijote ~]# systemctl enable httpd php-fpm
 ~~~
 
 Y para que todo funcione correctamente tendremos que habilitar los puertos en CentOS que por defecto vienen cerrados.
 ~~~
-[root@quijote ~]# firewall-cmd --permanent --add-service=http
+[root@quijote ~]# firewall-cmd --permanent --add-port=80/tcp
 success
-[root@quijote ~]# firewall-cmd --permanent --add-service=https
+[root@quijote ~]# firewall-cmd --permanent --add-port=443/tcp
 success
 [root@quijote ~]# firewall-cmd --reload
 success
 ~~~
 
-Creamos el enlace simbólico de httpd para cuando iniciemos la máquina.
+Ahora pasamos a configurar el fichero httpd.conf que está en la siguiente ruta /etc/httpd/conf/httpd.conf y tendremos que modificar la siguiente directiva.
 ~~~
-systemctl enable httpd
+IncludeOptional conf.d/*.conf
 ~~~
+
+Tendremos que cambiarla y dejarla con sites-enabled.
+~~~
+IncludeOptional sites-enabled/*.conf
+~~~
+
+Ahora configuramos el nuestro sitio que en mi caso se llama ismaelsantiago.conf y en mi caso el fichero quedaria de la siguiente forma configurando php en el sitio.
+~~~
+<VirtualHost *:80>
+
+    ServerName www.ismaelsantiago.gonzalonazareno.org
+    DocumentRoot /var/www/iesgn
+
+    <Proxy "unix:/run/php-fpm/www.sock|fcgi://php-fpm">
+        ProxySet disablereuse=off
+    </Proxy>
+
+    <FilesMatch \.php$>
+        SetHandler proxy:fcgi://php-fpm
+    </FilesMatch>
+
+    ErrorLog /var/www/iesgn/log/error.log
+    CustomLog /var/www/iesgn/log/requests.log combined
+
+</VirtualHost>
+~~~
+
+Creamos el enlace simbólico del sitio.
+~~~
+ln -s /etc/httpd/sites-available/ismaelsantiago.conf /etc/httpd/sites-enabled/
+~~~
+
+Reiniciamos httpd.
+~~~
+systemctl restart httpd
+~~~
+
+Y por último creamos el fichero php en nuestra ruta /var/www/iesgn.
+~~~
+[root@quijote ~]# echo "<?php phpinfo(); ?>" > /var/www/iesgn/info.php
+~~~
+
+Y ahora comprobamos que funciona todo correcto.
+![Inicio PHP](imagenes/php.png)
 
 ## Servidor de Base de Datos
 
