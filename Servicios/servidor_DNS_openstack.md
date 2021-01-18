@@ -11,7 +11,7 @@ sudo apt install bind9
 Una vez instalado vamos a configurarlo, tendremos que acceder a /etc/bind/named.conf.local y tendremos que añadir las siguientes lineas.
 ~~~
 view externa {
-        match-clients {172.22.0.0/16; 192.168.202.2;};
+        match-clients {172.22.0.0/15; 192.168.202.2;};
         allow-recursion { any; };
 
         include "/etc/bind/zones.rfc1918";
@@ -20,11 +20,6 @@ view externa {
         zone "ismaelsantiago.gonzalonazareno.org" {
           type master;
           file "/var/cache/bind/db.externa.ismaelsantiago.gonzalonazareno.org";
-        };
-
-        zone "22.172.in-addr.arpa" {
-          type master;
-          file "db.22.172";
         };
 };
 
