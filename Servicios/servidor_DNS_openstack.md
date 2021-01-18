@@ -10,9 +10,6 @@ sudo apt install bind9
 
 Una vez instalado vamos a configurarlo, tendremos que acceder a /etc/bind/named.conf.local y tendremos que añadir las siguientes lineas.
 ~~~
-acl interna { 10.0.0.0/24; localhost; };
-acl externa { 172.22.0.0/16; 192.168.202.2; };
-
 view externa {
         match-clients {172.22.0.0/16; 192.168.202.2;};
         allow-recursion { any; };
