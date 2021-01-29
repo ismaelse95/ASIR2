@@ -10,6 +10,7 @@ apt install postfix bsd-mailx
 ~~~
 
 Ahora vamos a configurar un registro SPF que sirve para que gmail en este caso no nos marque como spam el mensaje que vamos a enviar desde nuestra máquina.
+
 ![Inicio Correo](imagenes/sfp.png)
 
 Vamos a enviar un correo de prueba para ver que se envia correctamente para ello nos dirigimos a la terminal y escribimos lo siguiente.
@@ -78,8 +79,7 @@ Jan 29 07:47:49 ise postfix/smtp[3019]: ABB7D4109F: to=<ismaelse95@gmail.com>, r
 Jan 29 07:47:49 ise postfix/qmgr[13405]: ABB7D4109F: removed
 ~~~
 
-2.
-
+2. Vamos a enviar un correo desde nuestro correo de gmail y vamos a comprobar mediante log y desde mail que el mensaje nos llega.
 
 He configurado el registro MX y lo tengo configurado de la siguiente forma.
 ![Inicio Correo](imagenes/mail.iesgn18.png)
