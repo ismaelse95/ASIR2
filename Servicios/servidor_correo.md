@@ -2,7 +2,7 @@
 
 Vamos a configurar en nuestra máquina de OVH el servidor de correo para tu dominio iesgn18.es. El nombre del servidor de correo será mail.iesgn18.es
 
-1. Vamos a documentar una prueba de funcionamiento, donde enviemos desde tu servidor local al exterior. Mostraremos el log donde se vea el envío. Mostraremos el correo que has recibido. Muestra el registro SPF.
+## Vamos a documentar una prueba de funcionamiento, donde enviemos desde tu servidor local al exterior. Mostraremos el log donde se vea el envío. Mostraremos el correo que has recibido. Muestra el registro SPF.
 
 Para empezar vamos a instalar postfix y mailx en nuestro servidor para ello lo instalamos con el comando.
 ~~~
@@ -79,7 +79,7 @@ Jan 29 07:47:49 ise postfix/smtp[3019]: ABB7D4109F: to=<ismaelse95@gmail.com>, r
 Jan 29 07:47:49 ise postfix/qmgr[13405]: ABB7D4109F: removed
 ~~~
 
-2. Vamos a enviar un correo desde nuestro correo de gmail y vamos a comprobar mediante log y desde mail que el mensaje nos llega.
+## Documentación de prueba de funcionamiento, donde vamos a enviar un correo desde el exterior (gmail, hotmail,…) a nuestro servidor local. Mostraremos el log donde se vea el envío. Mostraremos cómo he leído el correo y el registro MX de nuestro dominio.
 
 He configurado el registro MX y lo tengo configurado de la siguiente forma.
 ![Inicio Correo](imagenes/mail.iesgn18.png)
