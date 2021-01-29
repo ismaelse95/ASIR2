@@ -2,7 +2,7 @@
 
 Vamos a configurar en nuestra máquina de OVH el servidor de correo para tu dominio iesgn18.es. El nombre del servidor de correo será mail.iesgn18.es
 
-## Vamos a documentar una prueba de funcionamiento, donde enviemos desde tu servidor local al exterior. Mostraremos el log donde se vea el envío. Mostraremos el correo que has recibido. Muestra el registro SPF.
+## Vamos a documentar una prueba de funcionamiento, donde enviemos desde nuestro servidor local al exterior. Mostraremos el log donde se vea el envío. Mostraremos el correo que he recibid y el registro SPF.
 
 Para empezar vamos a instalar postfix y mailx en nuestro servidor para ello lo instalamos con el comando.
 ~~~
@@ -142,3 +142,25 @@ Date: Fri, 29 Jan 2021 09:01:53 +0100
 Subject: Prueba al correo servidor
 To: Debian <debian@iesgn18.es>
 ~~~
+
+## Uso de alias y redirecciones.
+
+## Configuración de DKIM. Comprobación del registro DKIM en la página https://mxtoolbox.com/dkim.aspx. Configuración postfix para que firme los correos que envía. Prueba de funcionamiento.
+
+## Configuración de Postfix para que tenga en cuenta el registro SPF de los correos que recibe. Mostraremos el log del correo para comprobar que se está haciendo el testeo del registro SPF.
+
+## Configuración de un sistema antispam.
+
+## Configuración de un sistema antivirus. Realiza comprobaciones para comprobarlo.
+
+## Configuración del buzón de los usuarios de tipo Maildir. Envío de un correo a mi usuario y comprobación que el correo se ha guardado en el buzón Maildir del usuario del sistema correspondiente.
+
+## Instalación y configuración de dovecot para ofrecer el protocolo IMAP. Configuración de dovecot de manera adecuada para ofrecer autentificación y cifrado.
+
+Para realizar el cifrado de la comunicación crea un certificado en LetsEncrypt para el dominio mail.iesgnXX.es. Recuerda que para el ofrecer el cifrado tiene varias soluciones:
+
+- IMAP con STARTTLS: STARTTLS transforma una conexión insegura en una segura mediante el uso de SSL/TLS. Por lo tanto usando el mismo puerto 143/tcp tenemos cifrada la comunicación.
+- IMAPS: Versión segura del protocolo IMAP que usa el puerto 993/tcp.
+- Ofrecer las dos posibilidades.
+
+Elige una de las opciones anterior para realizar el cifrado. Y muestra la configuración de un cliente de correo (evolution, thunderbird, …) y muestra como puedes leer los correos enviado a tu usuario.
