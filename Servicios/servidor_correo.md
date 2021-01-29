@@ -10,7 +10,7 @@ apt install postfix bsd-mailx
 ~~~
 
 Ahora vamos a configurar un registro SPF que sirve para que gmail en este caso no nos marque como spam el mensaje que vamos a enviar desde nuestra máquina.
-![Inicio Correo](imagenes/spf.png)
+![Inicio Correo](imagenes/sfp.png)
 
 Vamos a enviar un correo de prueba para ver que se envia correctamente para ello nos dirigimos a la terminal y escribimos lo siguiente.
 ~~~
@@ -85,7 +85,7 @@ He configurado el registro MX y lo tengo configurado de la siguiente forma.
 ![Inicio Correo](imagenes/mail.iesgn18.png)
 
 Ahora vamos a enviar un correo desde gmail a nuestro servidor, el correo de nuestro servidor es debian@iesgn18.es.
-![Inicio Correo](imagenes/gmial1.png)
+![Inicio Correo](imagenes/gmail1.png)
 
 Antes de entrar en el mail vamos a ver el log.
 ~~~
