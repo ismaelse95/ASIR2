@@ -14,7 +14,9 @@ Vamos a empezar describiendo las herramientas que voy a utilizar.
 
 - Chronograf: Es una aplicación que nos muestra gráficamente los datos que almacena InfluxDB.
 
-Bien pues ahora empezamos con la instalacion de InfluxDB, para ello nos descargaremos el paquete .deb de la página oficial y lo instalaremos.
+## Configuración Dulcinea
+
+Bien pues ahora empezamos con la instalación de InfluxDB, para ello nos descargaremos el paquete .deb de la página oficial y lo instalaremos.
 ~~~
 debian@dulcinea:~$ sudo wget https://dl.influxdata.com/influxdb/releases/influxdb_1.8.3_amd64.deb
 ~~~
@@ -115,3 +117,85 @@ Con esto ya lo tendremos instalado y ahora solo hay que acceder a la aplicación
 ![Inicio Monitorización](imagenes/moni4.png)
 
 ![Inicio Monitorización](imagenes/moni5.png)
+
+## Configuración Clientes
+
+Vamos a configurar ahora nuestros clientes.
+
+- Quijote.
+Comenzamos la instalación con Quijote, para ello instalamos telegraf y nos dirigimos al fichero de configuración para añadir los siguientes parametros.
+~~~
+[centos@quijote ~]$ sudo nano /etc/telegraf/telegraf.conf
+
+[agent]
+  interval = "10s"
+  flush_interval = "10s"
+  precision = ""
+  hostname = "quijote"
+
+# Configuration for sending metrics to InfluxDB
+[[outputs.influxdb]]
+  urls = ["http://10.0.2.11:8086"]
+  database = "telegraf"
+  skip_database_creation = true
+  username = "admin"
+  password = "admin"
+~~~
+
+Con esto ya lo tendríamos configurado ahora solo hay que reiniciar el servicio.
+~~~
+[centos@quijote ~]$ sudo systemctl restart telegraf
+~~~
+
+- Sancho.
+Pasamos a configurar Sancho igual que en centos entramos en el fichero de configuración.
+~~~
+ubuntu@sancho:~$ sudo nano /etc/telegraf/telegraf.conf
+
+[agent]
+  interval = "10s"
+  flush_interval = "10s"
+  precision = ""
+  hostname = "sancho"
+
+# Configuration for sending metrics to InfluxDB
+[[outputs.influxdb]]
+  urls = ["http://10.0.1.10:8086"]
+  database = "telegraf"
+  skip_database_creation = true
+  username = "admin"
+  password = "admin"
+~~~
+
+Reiniciamos el servicio.
+~~~
+ubuntu@sancho:~$ sudo systemctl restart telegraf
+~~~
+
+- Freston.
+Por último configuramos de igual manera freston.
+~~~
+debian@freston:~$ sudo nano /etc/telegraf/telegraf.conf
+
+[agent]
+  interval = "10s"
+  flush_interval = "10s"
+  precision = ""
+  hostname = "freston"
+
+# Configuration for sending metrics to InfluxDB
+[[outputs.influxdb]]
+  urls = ["http://10.0.1.10:8086"]
+  database = "telegraf"
+  skip_database_creation = true
+  username = "admin"
+  password = "admin"
+~~~
+
+Reiniciamos el servicio.
+~~~
+debian@freston:~$ sudo systemctl restart telegraf
+~~~
+
+Nos dirigimos a Chronograf y vemos que nuestras máquinas están incluidas en los hosts.
+![Inicio Monitorización](imagenes/moni6.png)
