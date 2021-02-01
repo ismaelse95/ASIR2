@@ -240,3 +240,5 @@ También voy a configurar el mensaje que quiero que me llegue en Telegram. Donde
 
 Y aquí la prueba de funcionamiento con el bot.
 ![Inicio Monitorización](imagenes/moni11.png)
+
+El bot podéis comprobar que funciona buscando en telegram @alertasise_bot, pero eso si tendréis que esperar a que el servidor pase de x porcentaje ;).
