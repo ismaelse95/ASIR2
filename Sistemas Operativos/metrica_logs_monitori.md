@@ -197,5 +197,44 @@ Reiniciamos el servicio.
 debian@freston:~$ sudo systemctl restart telegraf
 ~~~
 
-Nos dirigimos a Chronograf y vemos que nuestras máquinas están incluidas en los hosts.
+Nos dirigimos a Chronograf y vemos que nuestras máquinas están incluidas como hosts en chronograf.
 ![Inicio Monitorización](imagenes/moni6.png)
+
+## Configuración Telegram para alertas.
+
+Bien vamos a configurar un sistema de alerta totalmente configurables, en mi caso voy a utilizar Telegram.
+
+Lo primero que vamos a hacer es crear un bot en telegram con los siguientes pasos.
+
+- Abrir telegram y escribir @BotFather en contactos
+- A continuación escribir /newbot y nos pedirá el nombre del bot
+- Luego nos pedirá el username del bot. Este tiene que acabar siembre en _bot
+- Una vez hecho esto, nos dará un Token. Esto es importante, hay que guardarlo
+- Para terminar, hay que iniciar una conversación con el bot que hemos creado escribiendo: @nombrebot_bot y desde la consola lanzar el siguiente comando: curl https://api.telegram.org/bot<API_TOKEN>/getUpdates
+
+De lo que nos devuelva, nos tenemos que quedar con el id
+
+Con esto tendremos el bot operativo ahora nos vamos al servidor Dulcinea y tendremos que instalar kapacitor.
+~~~
+debian@dulcinea:~$ sudo wget https://dl.influxdata.com/kapacitor/releases/kapacitor_1.5.8-1_amd64.deb
+~~~
+
+Instalación
+~~~
+debian@dulcinea:~$ sudo dpkg -i kapacitor_1.5.8-1_amd64.deb
+~~~
+
+Continuamos y nos dirigimos a Chronograf y en el ultimo apartado añadimos un nuevo kapacitor.
+![Inicio Monitorización](imagenes/moni7.png)
+
+Nos dirigimos al apartado de Telegram y tendremos que añadir nuestro token y el id del bot y guardamos la configuración.
+![Inicio Monitorización](imagenes/moni8.png)
+
+Ahora tendremos que crear una nueva alerta y en mi caso voy a crear una alerta cuando pase de cierto porcentaje de CPU. Lo voy a configurar para que pase de 5 para comprobar que funciona correctamente la alerta.
+![Inicio Monitorización](imagenes/moni9.png)
+
+También voy a configurar el mensaje que quiero que me llegue en Telegram. Donde le diré el uso de CPU del host que sea ha llegado a tanto porcentaje y si se pasa que sea critico o que cuando baje esté okey todo. Al final añadimos la fecha y hora en la que se ha producido esa incidencia.
+![Inicio Monitorización](imagenes/moni10.png)
+
+Y aquí la prueba de funcionamiento con el bot.
+![Inicio Monitorización](imagenes/moni11.png)
