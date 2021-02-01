@@ -14,6 +14,8 @@ Vamos a empezar describiendo las herramientas que voy a utilizar.
 
 - Chronograf: Es una aplicación que nos muestra gráficamente los datos que almacena InfluxDB.
 
+- Kapacitor: Con esto podremos configurar nuestras alertas dentro de Chronograf.
+
 ## Configuración Dulcinea
 
 Bien pues ahora empezamos con la instalación de InfluxDB, para ello nos descargaremos el paquete .deb de la página oficial y lo instalaremos.
