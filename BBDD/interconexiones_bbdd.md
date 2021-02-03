@@ -205,11 +205,11 @@ SQL> select * from PROVINCIAS;
 +---------+--------------------+       
 | CODIGO  | NOMBRE             |
 +---------+--------------------+
-|	 1      | Granada            |
-|	 2      | Teruel             |
-|	 3      | Huelva             |
-|	 4      | Malaga             |
-|	 5      | Cadiz              |
+|	 1| Granada            |
+|	 2| Teruel             |
+|	 3| Huelva             |
+|	 4| Malaga             |
+|	 5| Cadiz              |
 +---------+--------------------+
 SQLRowCount returns 7
 7 rows fetched
