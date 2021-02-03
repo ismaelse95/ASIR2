@@ -271,10 +271,10 @@ SQL> SELECT * FROM PROVINCIAS@Conexion;
 
     CODIGO NOMBRE
 ---------- --------------------
-	  1 Granada
-	       2 Teruel
-	       3 Huelva
-	       4 Malaga
-	       5 Cadiz
+	 1 Granada
+	 2 Teruel
+	 3 Huelva
+	 4 Malaga
+	 5 Cadiz
 ~~~
 ![Inicio Oracle](imagenes/interconex.png)
