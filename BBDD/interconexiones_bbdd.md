@@ -133,3 +133,148 @@ codigo | nombre
 ![Inicio Oracle](imagenes/interco.png)
 
 ## INTERCONEXION ENTRE SERVIDOR ORACLE A POSTGRES
+
+Vamos a realiazar una conexion entre dos servidores esta vez entre un servidor Oracle y uno Postgres. La IP que vamos a utilizar del servidor Oracle será 192.168.0.118 y la del servidor de Postges será 192.168.0.148.
+
+Para empezar tendremos que configurar el servidor Postgres donde entraremos en el fichero de configuración `/etc/postgresql/11/main/postgresql.conf` y tendremos que modificar la siguiente linea y poner la dirección del servidor Oracle.
+~~~
+listen_addresses = '192.168.0.118, localhost'
+~~~
+
+Ahora tendremos que dirigirnos al fichero `/etc/postgresql/11/main/pg_hba.conf` y tendremos que añadir un nuevo registro de autenticación e indicamos la dirección del servidor Oracle.
+~~~
+# TYPE  DATABASE        USER            ADDRESS                 METHOD
+  host  all             all             192.168.0.118/24        md5
+~~~
+
+Reiniciamos postgres.
+~~~
+sudo systemctl restart postgresql.service
+~~~
+
+Nos vamos al servidor Oracle y vamos a configurarlo para conectarnos a Postgres. Lo primero que necesitamos es instalar el dRiver ODBC.
+~~~
+sudo apt install odbc-postgresql unixodbc
+~~~
+
+A continuación tenemos que modificar los parametros de conexion en el servidor Postgres, el cual el fichero es `/etc/odbc.ini`.
+~~~
+[PSQLA]
+Debug = 0
+CommLog = 0
+ReadOnly = 1
+Driver = PostgreSQL ANSI
+Servername = 192.168.43.66
+Username = postgres
+Password = postgres
+Port = 5432
+Database = postgres_db
+Trace = 0
+TraceFile = /tmp/sql.log
+
+[PSQLU]
+Debug = 0
+CommLog = 0
+ReadOnly = 0
+Driver = PostgreSQL Unicode
+Servername = 192.168.43.66
+Username = postgres
+Password = postgres
+Port = 5432
+Database = postgres_db
+Trace = 0
+TraceFile = /tmp/sql.log
+
+[Default]
+Driver = /usr/lib/x86_64-linux-gnu/odbc/liboplodbcS.so
+~~~
+El nombre Driver va referido al fichero `/etc/odbcinst.ini` donde se indican los drivers de ODBC que utiliza.
+
+Hacemos una comprobación de conexión con Postgres desde Oracle.
+~~~
+root@oracle:/home/oracle# isql -v PSQLU
++---------------------------------------+
+| Connected!                            |
+|                                       |
+| sql-statement                         |
+| help [tablename]                      |
+| quit                                  |
+|                                       |
++---------------------------------------+
+SQL> select * from PROVINCIAS;
++---------+--------------------+       
+| CODIGO  | NOMBRE             |
++---------+--------------------+
+|	 1      | Granada            |
+|	 2      | Teruel             |
+|	 3      | Huelva             |
+|	 4      | Malaga             |
+|	 5      | Cadiz              |
++---------+--------------------+
+SQLRowCount returns 7
+7 rows fetched
+~~~
+
+Pasamos a configurar el servicio Heterogeneus Services, lo primero que tendremos que hacer es crear el fichero en `/opt/oracle/product/12.2.0.1/dbhome_1/hs/admin/initPSQLU.ora` y tendremos que añadir lo siguiente.
+~~~
+HS_FDS_CONNECT_INFO = PSQLU
+HS_FDS_TRACE_LEVEL = Debug
+HS_FDS_SHAREABLE_NAME = /usr/lib/x86_64-linux-gnu/odbc/psqlodbcw.so
+HS_LANGUAGE = AMERICAN_AMERICA.WE8ISO8859P1
+set ODBCINI=/etc/odbc.ini
+~~~
+
+Ahora tendremos que edita el fichero Listener, vamos a configurarlo en el fichero `/home/oracle/app/oracle/product/12.1.0/dbhome_1/network/admin/tnsnames.ora` para poder escuchar en el driver ODBC.
+~~~
+SID_LIST_LISTENER =
+ (SID_LIST =
+  (SID_DESC =
+   (GLOBAL_DBNAME = orcl)
+   (ORACLE_HOME = /opt/oracle/product/12.2.0.1/dbhome_1)
+   (SID_NAME = orcl)
+  )
+  (SID_DESC =
+    (SID_NAME = PSQLU) #Nombre del servicio Heterogeneus Services.
+    (PROGRAM = dg4odbc) #Programa por defecto.
+    (ORACLE_HOME = /opt/oracle/product/12.2.0.1/dbhome_1)
+  )
+ )
+~~~
+
+También tendremos que configurar en el mismo fichero `/home/oracle/app/oracle/product/12.1.0/dbhome_1/network/admin/tnsnames.ora` la conexión del diver ODBC, en el cual le indicaremos el SID=PSQLU el nombre que hemos asignado antes y HS=OK para que utilice Heterogeneus Services.
+~~~
+PSQLU =
+ (DESCRIPTION=
+ (ADDRESS=(PROTOCOL=tcp)(HOST=localhost)(PORT=1521))
+   (CONNECT_DATA=(SID=PSQLU))
+   (HS=OK)
+ )
+~~~
+
+Reiniciamos el Listener.
+~~~
+lsnrctl stop
+lsnrctl start
+~~~
+
+Ahora tendremos que crear un enlace para poder realizar la consulta.
+~~~
+CREATE PUBLIC DATABASE LINK Conexion
+CONNECT TO "postgres"
+IDENTIFIED BY "postgres"
+USING 'PSQLU';
+~~~
+
+Con todo esto ya configurado haremos la consulta desde Oracle para ver si funciona correctamente.
+~~~
+SQL> SELECT * FROM PROVINCIAS@Conexion;
+
+    CODIGO NOMBRE
+---------- --------------------
+	       1 Granada
+	       2 Teruel
+	       3 Huelva
+	       4 Malaga
+	       5 Cadiz
+~~~
+![Inicio Oracle](imagenes/interconex.png)
