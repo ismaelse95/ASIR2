@@ -271,7 +271,7 @@ SQL> SELECT * FROM PROVINCIAS@Conexion;
 
     CODIGO NOMBRE
 ---------- --------------------
-	       1 Granada
+	  1 Granada
 	       2 Teruel
 	       3 Huelva
 	       4 Malaga
