@@ -6,6 +6,23 @@ Configura un escenario con vagrant o similar que incluya varias máquinas que pe
 - Utiliza systemd mount para que el target se monte automáticamente al arrancar el cliente
 - Crea un target con 2 LUN y autenticación por CHAP y conéctala a un cliente windows. Explica cómo se escanea la red en windows y cómo se utilizan las unidades nuevas (formateándolas con NTFS)
 
+## ¿Qué es y como funciona iSCSI?
+
+iSCSI es un protocolo de comunicación de dispositivos, centraliza el almacenamiento en disco e independiza la información de los servidores.
+
+Así que en vez de tener un disco SCSI conectado físicamente a nuestro equipo, lo conectamos a través de la red.
+
+El target es el que se encarga de ofrecer uno o mas recursos iSCSI por la red. Se pueden usar distintos medios de almacenamiento.
+
+- Particiones RAID
+- Particiones LVM
+- Discos enteros
+- Particiones comunes
+- Archivos
+- Dispositivos de CD, cintas, etc.
+
+El iniciador es el cliente de iSCSI, éste tiene dos partes los módulos o driver y un programa que gestión las conexiones de los discos.
+
 ## Creación y configuración de targets
 
 Vamos a empezar a instalar primero el paquete para poder configurar y crear targets.
