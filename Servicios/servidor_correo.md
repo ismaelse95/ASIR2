@@ -1,6 +1,6 @@
 # Servidor de Correo
 
-Vamos a configurar en nuestra máquina de OVH el servidor de correo para tu dominio iesgn18.es. El nombre del servidor de correo será mail.iesgn18.es
+Vamos a configurar en nuestra máquina de OVH el servidor de correo para mi dominio iesgn18.es. El nombre del servidor de correo será mail.iesgn18.es
 
 ## Vamos a documentar una prueba de funcionamiento, donde enviemos desde nuestro servidor local al exterior. Mostraremos el log donde se vea el envío. Mostraremos el correo que he recibid y el registro SPF.
 

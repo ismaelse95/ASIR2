@@ -67,7 +67,7 @@ lsnrctl stop
 lsnrctl start
 ~~~
 
-Y ahora nos dirigimos al servidor secundario y comprobaremos que todo esta correcto haciendo un select a la tabla que tenemos en el primer servidor con el EnlaceDB que habiamos creado.
+Y ahora nos dirigimos al servidor secundario y comprobaremos que todo esta correcto haciendo un select a la tabla que tenemos en el primer servidor con el EnlaceDB que habíamos creado.
 ~~~
 SQL> SELECT * FROM pruebainterconexion@EnlaceDB;
 
@@ -86,7 +86,7 @@ Gavira		           Campillos Sierra		            916354896
 
 ## INTERCONEXION ENTRE SERVIDOR POSTGRES A POSTGRES
 
-Vamos a crear una conexión entre dos servidores Postgres, la direccion del primer servidor es 192.168.0.148 y la del segundo servidor es 192.168.0.175. Ahora lo primero que tenemos que hacer es modificar el fichero `/etc/postgresql/11/main/postgresql.conf` en nuestro primer servidor y tendremos que descomentar la siguiente linea y añadir la ip del servidor 2.
+Vamos a crear una conexión entre dos servidores Postgres, la dirección del primer servidor es 192.168.0.148 y la del segundo servidor es 192.168.0.175. Ahora lo primero que tenemos que hacer es modificar el fichero `/etc/postgresql/11/main/postgresql.conf` en nuestro primer servidor y tendremos que descomentar la siguiente linea y añadir la ip del servidor 2.
 ~~~
 listen_addresses = '192.168.0.175, localhost'
 ~~~
@@ -101,7 +101,7 @@ Nos dirigimos ahora a nuestro segundo servidor y tendremos que instalar `postgre
 sudo apt install postgresql-contrib
 ~~~
 
-Ahora tendremos que añadir en el fichero de configuración `/etc/postgresql/11/main/pg_hba.conf` un nuevo registro para la autentificación de fichero, lo pondremos de la siguiente forma.
+Ahora tendremos que añadir en el fichero de configuración `/etc/postgresql/11/main/pg_hba.conf` un nuevo registro para la autenticación de fichero, lo pondremos de la siguiente forma.
 ~~~
 # TYPE  DATABASE        USER            ADDRESS                 METHOD
   host  all             all             192.168.0.175/24        md5
@@ -112,7 +112,7 @@ Reiniciamos el cliente.
 sudo systemctl restart postgresql.service
 ~~~
 
-Crearemos un enlace con el paquete de extension que hemos instalado antes.
+Crearemos un enlace con el paquete de extensión que hemos instalado antes.
 ~~~
 postgres=# CREATE EXTENSION conex;
 CREATE EXTENSION
@@ -134,7 +134,7 @@ codigo | nombre
 
 ## INTERCONEXION ENTRE SERVIDOR ORACLE A POSTGRES
 
-Vamos a realiazar una conexion entre dos servidores esta vez entre un servidor Oracle y uno Postgres. La IP que vamos a utilizar del servidor Oracle será 192.168.0.118 y la del servidor de Postges será 192.168.0.148.
+Vamos a realizar una conexión entre dos servidores esta vez entre un servidor Oracle y uno Postgres. La IP que vamos a utilizar del servidor Oracle será 192.168.0.118 y la del servidor de Postges será 192.168.0.148.
 
 Para empezar tendremos que configurar el servidor Postgres donde entraremos en el fichero de configuración `/etc/postgresql/11/main/postgresql.conf` y tendremos que modificar la siguiente linea y poner la dirección del servidor Oracle.
 ~~~
@@ -152,7 +152,7 @@ Reiniciamos postgres.
 sudo systemctl restart postgresql.service
 ~~~
 
-Nos vamos al servidor Oracle y vamos a configurarlo para conectarnos a Postgres. Lo primero que necesitamos es instalar el dRiver ODBC.
+Nos vamos al servidor Oracle y vamos a configurarlo para conectarnos a Postgres. Lo primero que necesitamos es instalar el driver ODBC.
 ~~~
 sudo apt install odbc-postgresql unixodbc
 ~~~
