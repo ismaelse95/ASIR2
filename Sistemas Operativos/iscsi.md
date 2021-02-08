@@ -237,7 +237,7 @@ Creamos el target en el fichero de configuración `/etc/tgt/targets.conf`
 <target iqn.2020-02.com:targetwindows>
         backing-store /dev/windows1/logicowindows1
         backing-store /dev/windows2/logicowindows2
-        incominguser ismael ismaelsantiago1234
+        incominguser ismael ismaelsantiago1
 </target>
 ~~~
 
@@ -339,3 +339,25 @@ Target 2: iqn.2020-02.com:tgiscsi
     ACL information:
         ALL
 ~~~
+
+Ahora nos vamos a windows y tendremos que conectar el target, para ello nos tendremos que dirigir a Panel de control --> Herramientas administrativas --> Iniciador iSCSI.
+Una vez iniciado nos saldrá una nueva ventana donde le daremos a `Detección` y dentro de esta ventana a `Detectar Portal`.
+![Inicio ISCSI](imagenes/iscsi1.png)
+
+Ahora nos dirigimos a `Destinos` y seleccionamos `targetwidnwos` y le damos a `conectar`.
+![Inicio ISCSI](imagenes/iscsi2.png)
+
+Ahora habilitamos el inicio de sesión CHAP marcando la casilla y pondremos el nombre y el secreto de destino.
+![Inicio ISCSI](imagenes/iscsi3.png)
+
+![Inicio ISCSI](imagenes/iscsi4.png)
+
+Ahora vemos que los discos lo ha reconocido perfectamente.
+![Inicio ISCSI](imagenes/iscsi5.png)
+
+Le damos formato NTFS y comprobamos que podemos escribir dentro de los discos.
+![Inicio ISCSI](imagenes/iscsi6.png)
+
+![Inicio ISCSI](imagenes/iscsi7.png)
+
+![Inicio ISCSI](imagenes/iscsi8.png)
