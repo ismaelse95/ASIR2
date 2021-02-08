@@ -211,3 +211,131 @@ root@cliente:/etc/systemd/system# systemctl restart mnt-iscsi.mount
 
 Reiniciamos la maquina cliente y vemos que se automonta.
 ![Inicio ISCSI](imagenes/iscsi.png)
+
+## Creacion de target con 2 LUN y CHAP en Windows
+
+Vamos por último a crear y configurar primeor los volumenes logicos.
+~~~
+root@iscsi-server:~# pvcreate /dev/sdc
+  Physical volume "/dev/sdc" successfully created.
+root@iscsi-server:~# vgcreate windows1 /dev/sdc
+  Volume group "windows1" successfully created
+root@iscsi-server:~# lvcreate -L 950M -n logicowindows1 windows1
+  Rounding up size to full physical extent 952.00 MiB
+  Logical volume "logicowindows1" created.
+root@iscsi-server:~# pvcreate /dev/sdd
+  Physical volume "/dev/sdd" successfully created.
+root@iscsi-server:~# vgcreate windows2 /dev/sdd
+  Volume group "windows2" successfully created
+root@iscsi-server:~# lvcreate -L 950M -n logicowindows2 windows2
+  Rounding up size to full physical extent 952.00 MiB
+  Logical volume "logicowindows2" created.
+~~~
+
+Creamos el target en el fichero de configuración `/etc/tgt/targets.conf`
+~~~
+<target iqn.2020-02.com:targetwindows>
+        backing-store /dev/windows1/logicowindows1
+        backing-store /dev/windows2/logicowindows2
+        incominguser ismael ismaelsantiago1234
+</target>
+~~~
+
+Reiniciamos el target y vemos si se ha configurado todo correctamente.
+~~~
+root@iscsi-server:~# systemctl restart tgt
+root@iscsi-server:~# tgtadm --mode target --op show
+Target 1: iqn.2020-02.com:targetwindows
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00010000
+            SCSI SN: beaf10
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags:
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00010001
+            SCSI SN: beaf11
+            Size: 998 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/windows1/logicowindows1
+            Backing store flags:
+        LUN: 2
+            Type: disk
+            SCSI ID: IET     00010002
+            SCSI SN: beaf12
+            Size: 998 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/windows2/logicowindows2
+            Backing store flags:
+    Account information:
+        ismael
+    ACL information:
+        ALL
+Target 2: iqn.2020-02.com:tgiscsi
+    System information:
+        Driver: iscsi
+        State: ready
+    I_T nexus information:
+        I_T nexus: 1
+            Initiator: iqn.1993-08.org.debian:01:10f13f8d9b4f alias: cliente
+            Connection: 0
+                IP Address: 192.168.0.190
+    LUN information:
+        LUN: 0
+            Type: controller
+            SCSI ID: IET     00020000
+            SCSI SN: beaf20
+            Size: 0 MB, Block size: 1
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: null
+            Backing store path: None
+            Backing store flags:
+        LUN: 1
+            Type: disk
+            SCSI ID: IET     00020001
+            SCSI SN: beaf21
+            Size: 998 MB, Block size: 512
+            Online: Yes
+            Removable media: No
+            Prevent removal: No
+            Readonly: No
+            SWP: No
+            Thin-provisioning: No
+            Backing store type: rdwr
+            Backing store path: /dev/iscsi/logicoiscsi
+            Backing store flags:
+    Account information:
+    ACL information:
+        ALL
+~~~
