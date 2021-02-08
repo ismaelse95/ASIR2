@@ -278,3 +278,6 @@ SQL> SELECT * FROM PROVINCIAS@Conexion;
 	 5 Cadiz
 ~~~
 ![Inicio Oracle](imagenes/interconex.png)
+
+Podremos comprobar que podremos hacer un select de una tabla prueba que tengo en oracle y la tabla PROVINCIAS de Postgres.
+![Inicio Oracle](imagenes/interconexion.png)
