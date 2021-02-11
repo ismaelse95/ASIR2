@@ -181,14 +181,6 @@ Ahora enviamos un correo a la cuenta root y tendria que llegar al correo que he 
 
 ![Inicio Correo](imagenes/correo3.png)
 
-## Configuración de DKIM. Comprobación del registro DKIM en la página https://mxtoolbox.com/dkim.aspx. Configuración postfix para que firme los correos que envía. Prueba de funcionamiento.
-
-## Configuración de Postfix para que tenga en cuenta el registro SPF de los correos que recibe. Mostraremos el log del correo para comprobar que se está haciendo el testeo del registro SPF.
-
-## Configuración de un sistema antispam.
-
-## Configuración de un sistema antivirus. Realiza comprobaciones para comprobarlo.
-
 ## Tarea 8: Configuración del buzón de los usuarios de tipo Maildir. Envío de un correo a mi usuario y comprobación que el correo se ha guardado en el buzón Maildir del usuario del sistema correspondiente.
 
 Para configurar el buzón de Maildir tendremos primero que entrar en la configuración de postfix `/etc/postfix/main.cf`e introducir la siguiente linea.
@@ -227,7 +219,7 @@ Prueba Maildir
 *ISMAEL SANTIAGO ESTÉVEZ*
 ~~~
 
-## Instalación y configuración de dovecot para ofrecer el protocolo IMAP. Configuración de dovecot de manera adecuada para ofrecer autentificación y cifrado.
+## Tarea 9: Instalación y configuración de dovecot para ofrecer el protocolo IMAP. Configuración de dovecot de manera adecuada para ofrecer autentificación y cifrado.
 
 Para realizar el cifrado de la comunicación crea un certificado en LetsEncrypt para el dominio mail.iesgnXX.es. Recuerda que para el ofrecer el cifrado tiene varias soluciones:
 
