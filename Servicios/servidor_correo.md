@@ -145,6 +145,41 @@ To: Debian <debian@iesgn18.es>
 
 ## Uso de alias y redirecciones.
 
+Vamos a empezar configurando un nuevo Alias, tendremos que configurar que los correos que lleguen a nuestro usuario root nos lleguen a debian. Para ello tendremos que entrar en el fichero `/etc/aliases` y tendremos que dejar el fichero de la siguiente manera.
+~~~
+# /etc/aliases
+root: debian
+~~~
+
+Ahora para que se apliquen los cambios vamos a ejecutar el comando.
+~~~
+debian@ise:~$ sudo newaliases
+~~~
+
+Probamos a enviar un correo a root.
+![Inicio Correo](imagenes/correo1.png)
+
+Y ahora comprobamos que nos ha llegado a la bandeja de entrada de Debian.
+~~~
+debian@ise:~$ mail
+Mail version 8.1.2 01/15/2001.  Type ? for help.
+"/var/mail/debian": 1 message 1 new
+>N  1 ismaelse95@gmail.  Thu Feb 11 08:33   65/3232  Prueba Alias
+&
+~~~
+
+Con esto ya tendriamos creado el Alias ahora vamos a redireccionar un correo.
+Para ello tendremos que crear el fichero `~/.forward` en el usuario debian y pondré un correo secundario para que me redirreccione a ese correo.
+~~~
+debian@ise:~$ nano .forward
+ismalese1995@gmail.com
+~~~
+
+Ahora enviamos un correo a la cuenta root y tendria que llegar al correo que he puesto en el fichero forward.
+![Inicio Correo](imagenes/correo2.png)
+
+![Inicio Correo](imagenes/correo3.png)
+
 ## Configuración de DKIM. Comprobación del registro DKIM en la página https://mxtoolbox.com/dkim.aspx. Configuración postfix para que firme los correos que envía. Prueba de funcionamiento.
 
 ## Configuración de Postfix para que tenga en cuenta el registro SPF de los correos que recibe. Mostraremos el log del correo para comprobar que se está haciendo el testeo del registro SPF.
