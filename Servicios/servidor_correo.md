@@ -2,7 +2,7 @@
 
 Vamos a configurar en nuestra máquina de OVH el servidor de correo para mi dominio iesgn18.es. El nombre del servidor de correo será mail.iesgn18.es
 
-## Vamos a documentar una prueba de funcionamiento, donde enviemos desde nuestro servidor local al exterior. Mostraremos el log donde se vea el envío. Mostraremos el correo que he recibid y el registro SPF.
+## Tarea 1: Vamos a documentar una prueba de funcionamiento, donde enviemos desde nuestro servidor local al exterior. Mostraremos el log donde se vea el envío. Mostraremos el correo que he recibid y el registro SPF.
 
 Para empezar vamos a instalar postfix y mailx en nuestro servidor para ello lo instalamos con el comando.
 ~~~
@@ -79,7 +79,7 @@ Jan 29 07:47:49 ise postfix/smtp[3019]: ABB7D4109F: to=<ismaelse95@gmail.com>, r
 Jan 29 07:47:49 ise postfix/qmgr[13405]: ABB7D4109F: removed
 ~~~
 
-## Documentación de prueba de funcionamiento, donde vamos a enviar un correo desde el exterior (gmail, hotmail,…) a nuestro servidor local. Mostraremos el log donde se vea el envío. Mostraremos cómo he leído el correo y el registro MX de nuestro dominio.
+## Tarea 2: Documentación de prueba de funcionamiento, donde vamos a enviar un correo desde el exterior (gmail, hotmail,…) a nuestro servidor local. Mostraremos el log donde se vea el envío. Mostraremos cómo he leído el correo y el registro MX de nuestro dominio.
 
 He configurado el registro MX y lo tengo configurado de la siguiente forma.
 ![Inicio Correo](imagenes/mail.iesgn18.png)
@@ -143,7 +143,7 @@ Subject: Prueba al correo servidor
 To: Debian <debian@iesgn18.es>
 ~~~
 
-## Uso de alias y redirecciones.
+## Tarea 3: Uso de alias y redirecciones.
 
 Vamos a empezar configurando un nuevo Alias, tendremos que configurar que los correos que lleguen a nuestro usuario root nos lleguen a debian. Para ello tendremos que entrar en el fichero `/etc/aliases` y tendremos que dejar el fichero de la siguiente manera.
 ~~~
@@ -189,7 +189,43 @@ Ahora enviamos un correo a la cuenta root y tendria que llegar al correo que he 
 
 ## Configuración de un sistema antivirus. Realiza comprobaciones para comprobarlo.
 
-## Configuración del buzón de los usuarios de tipo Maildir. Envío de un correo a mi usuario y comprobación que el correo se ha guardado en el buzón Maildir del usuario del sistema correspondiente.
+## Tarea 8: Configuración del buzón de los usuarios de tipo Maildir. Envío de un correo a mi usuario y comprobación que el correo se ha guardado en el buzón Maildir del usuario del sistema correspondiente.
+
+Para configurar el buzón de Maildir tendremos primero que entrar en la configuración de postfix `/etc/postfix/main.cf`e introducir la siguiente linea.
+~~~
+home_mailbox = Maildir/
+~~~
+
+Reiniciamos postfix.
+~~~
+sudo systemctl restart postfix
+~~~
+
+Ahora enviamos un correo para probar que todo funciona bien y efectivamente hemos creado el buzon para Maildir.
+![Inicio Correo](imagenes/correo4.png)
+
+Como podemos comprobar al enviar el correo nos creara en el usuario Debian la siguiente carpeta.
+~~~
+debian@ise:~$ ls
+Maildir  mbox
+debian@ise:~$ ls Maildir/
+cur  new  tmp
+~~~
+
+Y comprobamos que nos ha llegado correctamente el correo con el cliente mutt.
+![Inicio Correo](imagenes/correo5.png)
+
+~~~
+Date: Thu, 11 Feb 2021 18:56:16 +0100
+From: Ismael Santiago Estévez <ismaelse95@gmail.com>
+To: Debian <debian@iesgn18.es>
+Subject: Prueba para Maildir
+
+Prueba Maildir
+
+--
+*ISMAEL SANTIAGO ESTÉVEZ*
+~~~
 
 ## Instalación y configuración de dovecot para ofrecer el protocolo IMAP. Configuración de dovecot de manera adecuada para ofrecer autentificación y cifrado.
 
@@ -200,3 +236,142 @@ Para realizar el cifrado de la comunicación crea un certificado en LetsEncrypt 
 - Ofrecer las dos posibilidades.
 
 Elige una de las opciones anterior para realizar el cifrado. Y muestra la configuración de un cliente de correo (evolution, thunderbird, …) y muestra como puedes leer los correos enviado a tu usuario.
+
+Para instalar y configurar dovecot lo primero que tendremos que hacer es instalar el paquete `devecod-imapd`.
+~~~
+debian@ise:~/.ssh$ sudo apt-get install dovecot-imapd
+~~~
+
+Ahora pasamos a instalar certbot para certicicar realizando los siguientes pasos.
+~~~
+debian@ise:~/.ssh$ sudo apt install snapd
+debian@ise:~/.ssh$ sudo snap install core
+debian@ise:~$ sudo snap refresh core
+debian@ise:~$ sudo snap install --classic certbot
+~~~
+
+Generamos el certificado.
+~~~
+debian@ise:~$ sudo certbot certonly --standalone
+~~~
+
+Cuando tengamos nuestro certificado vamos a configurar dovecot. Lo primero que tenemos que hacer es habilitar el mecanismo de autentificación y para ello entramos en el fichero `/etc/dovecot/conf.d/10-auth.conf`.
+~~~
+disable_plaintext_auth = yes
+auth_mechanisms = plain login
+~~~
+
+Ahora configuramos el directorio Maildir para ello tendremos que cambiar el mail_location en el fichero `/etc/dovecot/conf.d/10-mail.conf`.
+~~~
+mail_location = maildir:~/Maildir
+~~~
+
+Pasamos a habilitar imaps descomentando las siguientes lineas del fichero `/etc/dovecot/conf.d/10-master.conf`.
+~~~
+service imap-login {
+  inet_listener imap {
+    port = 143
+  }
+  inet_listener imaps {
+    port = 993
+    ssl = yes
+  }
+[...]
+unix_listener /var/spool/postfix/private/auth {
+    mode = 0666
+    user = postfix
+    group = postfix
+}
+~~~
+
+Nos queda configurar el fichero `/etc/dovecot/conf.d/10-ssl.conf` en el que tendremos que añandir nuestros certificados.
+~~~
+sudo nano /etc/dovecot/conf.d/10-ssl.conf
+
+ssl = required
+[...]
+ssl_cert = </etc/letsencrypt/live/mail.iesgn18.es/cert.pem
+ssl_key = </etc/letsencrypt/live/mail.iesgn18.es/privkey.pem
+~~~
+
+Reiniciamos Dovecot.
+~~~
+sudo systemctl restart dovecot
+~~~
+
+![Inicio Correo](imagenes/correo6.png)
+
+Lo miramos con mutt.
+~~~
+Date: Thu, 11 Feb 2021 20:03:04 +0100
+From: Ismael Santiago Estévez <ismaelse95@gmail.com>
+To: Debian <debian@iesgn18.es>
+Subject: PRUEBA CORREO
+
+Prueba correo
+
+--
+*ISMAEL SANTIAGO ESTÉVEZ*
+~~~
+
+Por último vamos a configurar nuestro cliente de correo thunderbird.
+![Inicio Correo](imagenes/correo7.png)
+
+![Inicio Correo](imagenes/correo8.png)
+
+## Tarea 11: Configuración de manera adecuada postfix para que podamos mandar un correo desde un cliente remoto. La conexión entre cliente y servidor debe estar autentificada con SASL usando dovecor y además debe estar cifrada. Para cifrar esta comunicación puedes usar dos opciones:
+
+- ESMTP + STARTTLS: Usando el puerto 567/tcp enviamos de forma segura el correo al servidor.
+- SMTPS: Utiliza un puerto no estándar (465) para SMTPS (Simple Mail Transfer Protocol Secure). No es una extensión de smtp.
+Es muy parecido a HTTPS.
+
+Vale vamos a configurar nuestro postfix para que podamos enviar correos desde thunderbird, para ello vamos a usar el cifrado SMTPS, que usará el puerto 465.
+
+Para empezar tendremos que hablitar SMTP-AUTH y tendremos que ejecutar los siguientes comnados para configurar postfix.
+~~~
+sudo postconf -e 'smtpd_sasl_type = dovecot'
+sudo postconf -e 'smtpd_sasl_path = private/auth'
+sudo postconf -e 'smtpd_sasl_local_domain ='
+sudo postconf -e 'smtpd_sasl_security_options = noanonymous'
+sudo postconf -e 'broken_sasl_auth_clients = yes'
+sudo postconf -e 'smtpd_sasl_auth_enable = yes'
+sudo postconf -e 'smtpd_recipient_restrictions = permit_sasl_authenticated,permit_mynetworks,reject_unauth_destination'
+sudo postconf -e 'smtp_tls_security_level = may'
+sudo postconf -e 'smtpd_tls_security_level = may'
+sudo postconf -e 'smtp_tls_note_starttls_offer = yes'
+sudo postconf -e 'smtpd_tls_loglevel = 1'
+sudo postconf -e 'smtpd_tls_received_header = yes'
+~~~
+
+A continuación tendremos que descomentar las siguientes lineas del fichero `/etc/postfix/master.cf`.
+~~~
+smtps     inet  n       -       y       -       -       smtpd
+[...]
+  -o syslog_name=postfix/smtps
+  -o smtpd_tls_wrappermode=yes
+  -o smtpd_sasl_auth_enable=yes
+  -o smtpd_reject_unlisted_recipient=no
+  -o smtpd_client_restrictions=$mua_client_restrictions
+  -o smtpd_helo_restrictions=$mua_helo_restrictions
+  -o smtpd_sender_restrictions=$mua_sender_restrictions
+  -o smtpd_recipient_restrictions=
+  -o smtpd_relay_restrictions=permit_sasl_authenticated,reject
+  -o milter_macro_daemon_name=ORIGINATING
+~~~
+
+Ahora añadimos el certificado y la clave privada al fichero `/etc/postfix/main.cf`.
+~~~
+smtpd_tls_cert_file=/etc/letsencrypt/live/mail.iesgn18.es/cert.pem
+smtpd_tls_key_file=/etc/letsencrypt/live/mail.iesgn18.es/privkey.pem
+~~~
+
+Reiniciamos postfix.
+~~~
+sudo systemctl restart postfix
+~~~
+
+Comprobamos que podemos enviar correos primero configurando smtp server.
+
+![Inicio Correo](imagenes/correo9.png)
+
+![Inicio Correo](imagenes/correo10.png)
