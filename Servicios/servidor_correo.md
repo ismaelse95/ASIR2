@@ -157,7 +157,7 @@ debian@ise:~$ sudo newaliases
 ~~~
 
 Probamos a enviar un correo a root.
-![Inicio Correo](imagenes/correo1.png)
+![Inicio Correo](imagenes/correo.png)
 
 Y ahora comprobamos que nos ha llegado a la bandeja de entrada de Debian.
 ~~~
