@@ -367,3 +367,7 @@ Comprobamos que podemos enviar correos primero configurando smtp server.
 ![Inicio Correo](imagenes/correo9.png)
 
 ![Inicio Correo](imagenes/correo10.png)
+
+Nos dirigimos a mi correo personal para ver si hemos recivido el mensaje.
+
+![Inicio Correo](imagenes/correo11.png)
