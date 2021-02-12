@@ -371,3 +371,11 @@ Comprobamos que podemos enviar correos primero configurando smtp server.
 Nos dirigimos a mi correo personal para ver si hemos recivido el mensaje.
 
 ![Inicio Correo](imagenes/correo11.png)
+
+## Tarea 13: Puntuación del correo electrónico
+
+Para ver la puntuación de correo electrónico tendremos que enviar un correo al correo electrónico que nos dice la página.
+
+![Inicio Correo](imagenes/correo12.png)
+
+![Inicio Correo](imagenes/correo13.png)
