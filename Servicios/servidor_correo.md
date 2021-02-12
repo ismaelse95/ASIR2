@@ -181,6 +181,32 @@ Ahora enviamos un correo a la cuenta root y tendria que llegar al correo que he 
 
 ![Inicio Correo](imagenes/correo3.png)
 
+## Tarea 6: Configurar un sistema antispam. Realiza comprobaciones para comprobarlo.
+
+Vamos a configurar Spamassassin en nuestro servidor de correo para ello primero tendremos que instalar los siguientes paquetes.
+~~~
+sudo apt-get install spamassassin spamc razor pyzor
+~~~
+
+Ahora tendremos que descomentar una linea del fichero `/etc/default/spamassassin` que es la siguiente.
+~~~
+# /etc/default/spamassassin
+# Duncan Findlay
+
+# WARNING: please read README.spamd before using.
+# There may be security risks.
+
+# Change to one to enable spamd
+ENABLED=1
+
+# [...]
+~~~
+
+Reiniciamos el servicio.
+~~~
+sudo systemctl restart spamassassin
+~~~
+
 ## Tarea 8: Configuración del buzón de los usuarios de tipo Maildir. Envío de un correo a mi usuario y comprobación que el correo se ha guardado en el buzón Maildir del usuario del sistema correspondiente.
 
 Para configurar el buzón de Maildir tendremos primero que entrar en la configuración de postfix `/etc/postfix/main.cf`e introducir la siguiente linea.
