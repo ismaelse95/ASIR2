@@ -160,9 +160,115 @@ Ahora intentamos acceder a marca y a elmundo y vemos que en marca podemos accede
 
 ## Balanceador de carga
 
+- Tarea 1: Entrega capturas de pantalla que el balanceador está funcionando.
+
 Vamos a configurar el [escenario](https://fp.josedomingo.org/serviciosgs/u08/doc/haproxy/vagrant.zip) que tenemos en la página de Jose Domingo.
 
 Una vez iniciado el vagrantfile entramos en la máquina balanceador y vamos a instalar haproxy.
 ~~~
-
+vagrant@balanceador:~$ sudo apt install haproxy
 ~~~
+
+Entramos en el fichero `/etc/haproxy/haproxy.cfg` y pondremos la siguiente configuración.
+~~~
+global
+    daemon
+    maxconn 256
+    user    haproxy
+    group   haproxy
+    log     127.0.0.1       local0
+    log     127.0.0.1       local1  notice
+defaults
+    mode    http
+    log     global
+    timeout connect 5000ms
+    timeout client  50000ms
+    timeout server  50000ms
+listen granja_cda
+    bind 192.168.0.180:80
+    mode http
+    stats enable
+    stats auth  cda:cda
+    balance roundrobin
+    server uno 10.10.10.11:80 maxconn 128
+    server dos 10.10.10.22:80 maxconn 128
+~~~
+
+Ahora vamos a entrar en el fichero `/etc/default/haproxy` y ponemos lo siguiente.
+~~~
+ENABLED=1
+~~~
+
+Reiniciamos el servicio.
+~~~~
+vagrant@balanceador:~$ sudo systemctl restart haproxy
+~~~~
+
+![Inicio Proxy](imagenes/balan.png)
+
+![Inicio Proxy](imagenes/balan2.png)
+
+- Tarea 2: Entrega una captura de pantalla donde se vea la página web de estadísticas de haproxy (abrir en un navegador web la URL http://172.22.x.x/haproxy?stats, pedirá un usuario y un password, ambos cda).
+
+Ahora vamos a acceder por el navegador a las estadísticas, para acceder tendremos que poner el usuario cda y la constraseña cda.
+
+![Inicio Proxy](imagenes/balan3.png)
+
+![Inicio Proxy](imagenes/balan4.png)
+
+- Tarea 3: Desde uno de los servidores (apache1 ó apache2), verificar los logs del servidor Apache. En todos los casos debería figurar como única dirección IP cliente la IP interna de la máquina balanceador 10.10.10.1. ¿Por qué?
+
+Vemos los logs de apache1.
+~~~
+10.10.10.1 - - [22/Feb/2021:11:53:56 +0000] "GET / HTTP/1.1" 200 436 "-" "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/88.0.4324.152 Safari/537.36"
+~~~
+
+Vemos que en log aparece la ip interna del balanceador ya que nosotros accedemos a la ip externa del navegador y este es el que se encarga de preguntar a los servidores web que están en su red interna cual va a ser el que va a responder a la petición.
+
+- Tarea 4:Verificar la estructura y valores de las cookies PHPSESSID intercambiadas. En la primera respuesta HTTP (inicio de sesión), se establece su valor con un parámetro HTTP SetCookie en la cabecera de la respuesta. Las sucesivas peticiones del cliente incluyen el valor de esa cookie (parámetro HTTP Cookie en la cabecera de las peticiones)
+
+Vamos a verificar la estructuras de cookies para ello primero tendremos que configurar el fichero sesion.php que tenemos en las maquinas apache.
+~~~
+<?php
+     header('Content-Type: text/plain');
+     session_start();
+     if(!isset($_SESSION['visit']))
+     {
+             echo "This is the first time you're visiting this server";
+             $_SESSION['visit'] = 0;
+     }
+     else
+             echo "Your number of visits: ".$_SESSION['visit'];             
+
+     $_SESSION['visit']++;              
+
+     echo "\nServer IP: ".$_SERVER['SERVER_ADDR'];
+     echo "\nClient IP: ".$_SERVER['REMOTE_ADDR'];
+     echo "\nX-Forwarded-for: ".$_SERVER['HTTP_X_FORWARDED_FOR']."\n";
+     print_r($_COOKIE);
+?>
+~~~
+
+Incluimos la siguientes lineas en el fichero `/etc/haproxy/haproxy.cfg`
+~~~
+cookie PHPSESSID prefix                               # <- aquí
+server uno 10.10.10.11:80 cookie EL_UNO maxconn 128   # <- aquí
+server dos 10.10.10.22:80 cookie EL_DOS maxconn 128   # <- aquí
+~~~
+
+Reiniciamos el servicio.
+~~~
+vagrant@balanceador:~$ sudo systemctl restart haproxy
+~~~
+
+Y accedemos mediante el navegador a sesion.php.
+
+![Inicio Proxy](imagenes/balan5.png)
+
+Aqui podemos ver la cookie que tenemos, si recargamos la página varias veces vemos que la cookie no cambia pero si el numero de veces que hemos recargado la página.
+
+![Inicio Proxy](imagenes/balan6.png)
+
+Si entramos en modo incognito vemos que la cookie si cambia.
+
+![Inicio Proxy](imagenes/balan7.png)
