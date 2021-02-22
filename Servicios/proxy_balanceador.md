@@ -1,6 +1,6 @@
 # Proxy y balanceador de carga
 
-En esta practica vamos a tener dos máquinas virtuales, una de ellas sera el servidor y otra un cliente conectada en red interna con el servidor. Por supuesto nuestro servidor tendrá otra red externa.
+En esta práctica vamos a tener por un lado el proxy con dos máquinas en vagrant una de ella será el servidor y la otra un cliente en la red interna para hacer pruebas, por otro lado tendremos el balanceador de carga que tendremos 3 máquinas y la configuración sera la siguiente: [Escenario](https://fp.josedomingo.org/serviciosgs/u08/doc/haproxy/vagrant.zip).
 
 ## Proxy
 
