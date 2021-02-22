@@ -160,7 +160,7 @@ Ahora intentamos acceder a marca y a elmundo y vemos que en marca podemos accede
 
 ## Balanceador de carga
 
-Vamos a configurar el ![escenario](https://fp.josedomingo.org/serviciosgs/u08/doc/haproxy/vagrant.zip) que tenemos en la página de Jose Domingo.
+Vamos a configurar el [escenario](https://fp.josedomingo.org/serviciosgs/u08/doc/haproxy/vagrant.zip) que tenemos en la página de Jose Domingo.
 
 Una vez iniciado el vagrantfile entramos en la máquina balanceador y vamos a instalar haproxy.
 ~~~
