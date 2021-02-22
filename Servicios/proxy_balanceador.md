@@ -160,7 +160,7 @@ Ahora intentamos acceder a marca y a elmundo y vemos que en marca podemos accede
 
 ## Balanceador de carga
 
-- Tarea 1: Entrega capturas de pantalla que el balanceador está funcionando.
+### Tarea 1: Entrega capturas de pantalla que el balanceador está funcionando.
 
 Vamos a configurar el [escenario](https://fp.josedomingo.org/serviciosgs/u08/doc/haproxy/vagrant.zip) que tenemos en la página de Jose Domingo.
 
@@ -208,7 +208,7 @@ vagrant@balanceador:~$ sudo systemctl restart haproxy
 
 ![Inicio Proxy](imagenes/balan2.png)
 
-- Tarea 2: Entrega una captura de pantalla donde se vea la página web de estadísticas de haproxy (abrir en un navegador web la URL http://172.22.x.x/haproxy?stats, pedirá un usuario y un password, ambos cda).
+### Tarea 2: Entrega una captura de pantalla donde se vea la página web de estadísticas de haproxy (abrir en un navegador web la URL http://172.22.x.x/haproxy?stats, pedirá un usuario y un password, ambos cda).
 
 Ahora vamos a acceder por el navegador a las estadísticas, para acceder tendremos que poner el usuario cda y la constraseña cda.
 
@@ -216,7 +216,7 @@ Ahora vamos a acceder por el navegador a las estadísticas, para acceder tendrem
 
 ![Inicio Proxy](imagenes/balan4.png)
 
-- Tarea 3: Desde uno de los servidores (apache1 ó apache2), verificar los logs del servidor Apache. En todos los casos debería figurar como única dirección IP cliente la IP interna de la máquina balanceador 10.10.10.1. ¿Por qué?
+### Tarea 3: Desde uno de los servidores (apache1 ó apache2), verificar los logs del servidor Apache. En todos los casos debería figurar como única dirección IP cliente la IP interna de la máquina balanceador 10.10.10.1. ¿Por qué?
 
 Vemos los logs de apache1.
 ~~~
@@ -225,7 +225,7 @@ Vemos los logs de apache1.
 
 Vemos que en log aparece la ip interna del balanceador ya que nosotros accedemos a la ip externa del navegador y este es el que se encarga de preguntar a los servidores web que están en su red interna cual va a ser el que va a responder a la petición.
 
-- Tarea 4:Verificar la estructura y valores de las cookies PHPSESSID intercambiadas. En la primera respuesta HTTP (inicio de sesión), se establece su valor con un parámetro HTTP SetCookie en la cabecera de la respuesta. Las sucesivas peticiones del cliente incluyen el valor de esa cookie (parámetro HTTP Cookie en la cabecera de las peticiones)
+### Tarea 4:Verificar la estructura y valores de las cookies PHPSESSID intercambiadas. En la primera respuesta HTTP (inicio de sesión), se establece su valor con un parámetro HTTP SetCookie en la cabecera de la respuesta. Las sucesivas peticiones del cliente incluyen el valor de esa cookie (parámetro HTTP Cookie en la cabecera de las peticiones)
 
 Vamos a verificar la estructuras de cookies para ello primero tendremos que configurar el fichero sesion.php que tenemos en las maquinas apache.
 ~~~
