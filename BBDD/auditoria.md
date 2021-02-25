@@ -90,7 +90,7 @@ oracle		SCOTT	   DELETE			25/02/20
 
 4. Realiza una auditoría de grano fino para almacenar información sobre la inserción de empleados del departamento 10 en la tabla emp de scott.
 
-Primero vamos a crear un procedimiento para ejecutar la auditoria grano fino.
+Primero vamos a crear un procedimiento para ejecutar la auditoría grano fino y a continuación lo comprobamos.
 ~~~
 begin
 DBMS_FGA.ADD_POLICY (
