@@ -90,6 +90,20 @@ oracle		SCOTT	   DELETE			25/02/20
 
 4. Realiza una auditoría de grano fino para almacenar información sobre la inserción de empleados del departamento 10 en la tabla emp de scott.
 
+Primero vamos a crear un procedimiento para ejecutar la auditoria grano fino.
+~~~
+begin
+DBMS_FGA.ADD_POLICY (
+	object_schema      =>  'SCOTT',
+	object_name        =>  'EMP',
+	policy_name        =>  'InserEmp',
+	audit_condition    =>  'DEPTNO = 10',
+	statement_types    =>  'INSERT');
+end;
+/
+~~~
+
+![Inicio Auditorías](imagenes/audi7.png)
 
 5. Explica la diferencia entre auditar una operación by access o by session.
 
