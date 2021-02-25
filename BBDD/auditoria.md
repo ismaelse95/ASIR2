@@ -253,5 +253,29 @@ END$$
 
 10.  Averigua las posibilidades que ofrece MongoDB para auditar los cambios que va sufriendo un documento.
 
+MongoDB permite auditar tareas, lo podremos especificar usando la siguiente opción.
+~~~
+--auditFilter
+~~~
+
+Por ejemplo, en este caso auditaremos la creación de colecciones de la siguiente forma.
+~~~
+{ atype: { $in: [ "createCollection", "dropCollection" ] } }
+~~~
+
+Y para finalizar creamos una sentencia que auditara la creación o eliminación de colecciones.
+~~~
+mongod --dbpath data/db --auditDestination file --auditFilter '{ atype: { $in: [ “createCollection”, “dropCollection” ] } }' --auditFormat BSON --auditPath data/db/auditLog.bson
+~~~
 
 11.  Averigua si en MongoDB se pueden auditar los accesos al sistema.
+
+Podremos auditar el acceso al sistema con el siguiente comando.
+~~~
+{ atype: "authenticate", "param.db": "test" }
+~~~
+
+También podremos auditar la colección de autentificación pasándolo a un fichero.
+~~~
+mongod --dbpath data/db --auth --auditDestination file --auditFilter '{ atype: "authenticate", "param.db": "test" }' --auditFormat BSON --auditPath data/db/auditLog.bson
+~~~
