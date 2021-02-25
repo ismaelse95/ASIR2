@@ -144,6 +144,17 @@ Reiniciamos la base de datos y vemos que se ha activado el valor al parámetro a
 
 7. Localiza en Enterprise Manager las posibilidades para realizar una auditoría e intenta repetir con dicha herramienta los apartados 1, 3 y 4.
 
+Voy a utilizar Enterprise Manager 11g para acceder a valores de auditoría tendremos que acceder haciendo click en "Servidor" --> dentro de seguridad "Valores de auditoria"
+
+![Inicio Auditorías](imagenes/audi8.png)
+
+Arriba a la derecha nos aparece conexiones fallidas, hacemos click y nos deberá de aparecer todas las conexiones fallidas que hemos hecho.
+
+![Inicio Auditorías](imagenes/audi9.png)
+
+Podemos ver también los objetos de auditoría.
+
+![Inicio Auditorías](imagenes/audi10.png)
 
 8. Averigua si en Postgres se pueden realizar los apartados 1, 3 y 4. Si es así, documenta el proceso adecuadamente.
 
