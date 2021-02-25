@@ -87,6 +87,7 @@ insert into prueba2 values('prueba2 para ts1');
 ~~~
 
 Volvemos a ver el espacio que tiene ahora.
+
 ![Inicio Almacenamiento](imagenes/alma.png)
 
 Vamos ahora a borrar la tabla prueba2 para ver si tenemos mas espacio o no.
