@@ -185,3 +185,77 @@ export KUBECONFIG=~/.kube/config
 ![Inicio Kubernete](imagenes/kuber.png)
 
 ## Despliegue de ejemplo8
+
+Vamos a desplegar el ejemplo8, para iniciar todos los fichero .yaml lo haremos con el siguiente comando.
+~~~
+vagrant@cliente:~/.kube/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ kubectl apply -f .
+~~~
+
+Una vez cargado podemos ver los pods que hemos iniciado.
+~~~
+vagrant@cliente:~/.kube/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ kubectl get all        
+NAME                            READY   STATUS    RESTARTS   AGE
+pod/mongo-5c694c878b-ztnzf      1/1     Running   0          63m
+pod/letschat-7c66bd64f5-sfc4w   1/1     Running   1          63m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes   ClusterIP   10.43.0.1       <none>        443/TCP          3h3m
+service/letschat     NodePort    10.43.168.141   <none>        8080:30702/TCP   63m
+service/mongo        ClusterIP   10.43.10.83     <none>        27017/TCP        63m
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mongo      1/1     1            1           63m
+deployment.apps/letschat   1/1     1            1           63m
+
+NAME                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/mongo-5c694c878b      1         1         1       63m
+replicaset.apps/letschat-7c66bd64f5   1         1         1       63m
+~~~
+
+También podemos ver el ingress.
+~~~
+vagrant@cliente:~/.kube/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ kubectl get all,ingress
+NAME                            READY   STATUS    RESTARTS   AGE
+pod/mongo-5c694c878b-ztnzf      1/1     Running   0          64m
+pod/letschat-7c66bd64f5-sfc4w   1/1     Running   1          64m
+
+NAME                 TYPE        CLUSTER-IP      EXTERNAL-IP   PORT(S)          AGE
+service/kubernetes   ClusterIP   10.43.0.1       <none>        443/TCP          3h4m
+service/letschat     NodePort    10.43.168.141   <none>        8080:30702/TCP   64m
+service/mongo        ClusterIP   10.43.10.83     <none>        27017/TCP        64m
+
+NAME                       READY   UP-TO-DATE   AVAILABLE   AGE
+deployment.apps/mongo      1/1     1            1           64m
+deployment.apps/letschat   1/1     1            1           64m
+
+NAME                                  DESIRED   CURRENT   READY   AGE
+replicaset.apps/mongo-5c694c878b      1         1         1       64m
+replicaset.apps/letschat-7c66bd64f5   1         1         1       64m
+
+NAME                                         CLASS    HOSTS                 ADDRESS           PORTS   AGE
+ingress.networking.k8s.io/ingress-letschat   <none>   prueba.letschat.com   192.168.121.156   80      64m
+~~~
+
+![Inicio Kubernete](imagenes/kuber2.png)
+
+![Inicio Kubernete](imagenes/kuber3.png)
+
+## Escalado de ejemplo8
+
+Vamos a escalar nuestra aplicación, para ello tendremos que ejecutar el siguiente comando.
+~~~
+vagrant@cliente:~/.kube/kubernetes-storm/unidad3/ejemplos-3.2/ejemplo8$ kubectl scale deployment letschat --replicas=3
+deployment.apps/letschat scaled
+~~~
+
+Con esto escalamos a 3 replicas tendiendo así 3 pods por si se cae alguno tener 2 mas de respaldo.
+
+![Inicio Kubernete](imagenes/kuber5.png)
+
+Ahora nuestra aplicación debería seguir funcionando, vamos a comprobar y vamos a acceder a letschat.
+
+![Inicio Kubernete](imagenes/kuber6.png)
+
+![Inicio Kubernete](imagenes/kuber7.png)
+
+![Inicio Kubernete](imagenes/kuber8.png)
